@@ -11,7 +11,7 @@ function teach() {
        
         setTimeout(function () {
             console.log('after 5s lunch..'+name + " back to session");
-            //  throw new Error('ooops');
+            //throw new Error('ooops');
         }, 5000);
         
         //console.log('teaching further... ends');

@@ -1,0 +1,18 @@
+
+
+1. let,const keywords
+
+  --> variable will not hoisted
+  --> block-scoped
+
+  let ==> for 'mutable' variables
+  const ==> for 'immutable' variables
+
+
+2. Arrow functions  
+
+    --> always executes with obj , on which context it created.
+    --> not bindable any obj dynamically.
+
+
+3. default functions params
