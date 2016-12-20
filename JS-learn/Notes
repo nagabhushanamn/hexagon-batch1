@@ -64,6 +64,7 @@ JS-lang
 1. data-structures
 2. execution contexts
 3. functions - depth
+3.1 . closure
 4. 'this' keyword
 5. inheritence
 6. objects - advanced
@@ -72,5 +73,42 @@ JS-lang
 
 
 ------------------------------------------------------
+
+
+JS-lang is
+
+ --> single-threaded lang , supports concurrency
+ --> Non Blocking IO
+
+
+
+browser e.g chrome :
+
+
+ 1. JS-engine ( v8 )
+
+    single-call-stack ( to execute contexts)
+    heap              ( to keep objects)
+
+ 2. Web APIs ( DOM , XHR , Timer , HTML5 APIs) 
+
+ 3. message/callback/event queue
+
+ 4. EventLoop ( hero of browser )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
