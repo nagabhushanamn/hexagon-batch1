@@ -1,0 +1,44 @@
+
+
+
+ JS module standards
+
+
+   1. AMD ( Asynchronous Module Definition )
+   2. commonJS
+   3. SystemJS
+
+   6. ES6 modules ( official )
+
+---------------------------------------
+
+
+AMD spec
+
+
+to create .js module
+
+--> define(mid,[],factory);
+
+to load .js module
+
+--> require(config,[],callback);
+
+
+---------------------------------------
+
+
+
+commonJS module standard
+
+
+ --> every .js file is an module by default.
+ --> to load other module , use require('mid')
+ --> we can group related modules as package with entry-module(index.js)
+ --> any variables/function in a .js file , by default they r private members.
+ --> export public members explicitly with 'module.exports'
+
+
+imp note: Node.js runtime implements/use 'commonJS' as a default module standard.
+
+-------------------------------------

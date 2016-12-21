@@ -1,0 +1,28 @@
+
+
+
+ JS module standards
+
+
+   1. AMD ( Asynchronous Module Definition )
+   2. commonJS
+   3. SystemJS
+
+   6. ES6 modules ( official )
+
+---------------------------------------
+
+
+AMD spec
+
+
+to create .js module
+
+--> define(mid,[],factory);
+
+to load .js module
+
+--> require(config,[],callback);
+
+
+---------------------------------------
