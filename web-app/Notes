@@ -1,0 +1,92 @@
+
+what .js lang can do on HTML-page in browser-envi?
+
+   .js-lang with browser/web APIs, can bring any dynamic functionality to web-page.
+
+    browser/web APIs ==> functionality implemented and abstracted 
+                         as js-objs by browsers based on w3c standards.
+
+    e.g  DOM , XHR , Timer , Etc....
+    
+    using DOM
+
+   --> can create/retreive/update/delete HTML elements.
+   --> can change element's attributes 
+   --> can change element's styles
+   --> can change element's inner-content
+   --> can validate form-fields before submit
+   --> can create rich UI components ( e.f layouts , datepickers , etc...)
+   --> can listen for events ( user / broswer events)
+
+   using XHR 
+
+   --> can communicate with server async and update results in existing page
+
+   using Timer API
+
+   --> setTimeout,setInterval 
+
+   HTML-5 APIs
+
+   --> canvas : drawing element ( can draw any shapes/text)
+   --> audio/videp : multimedia support
+   --> storage API
+   --> webworker
+   --> SSE
+   --> websockets
+   --> geo
+
+   --> etc...
+
+
+   reference : caniuse.com
+
+
+---------------------------------------------------------------------
+
+
+ limitations/complexities of plain-js ( script written by you)
+
+  --> browser compatibility
+  --> too much code for simple actions
+  --> performance ( i.e DOM selection,manipulation, etc...)
+  --> memory management ( i.e cleaning un-used eleemnts/objects , unbind event listeners)
+
+  --> code oraganization is difficult.
+  --> data-binding support 
+
+
+  solns 
+
+  --> using JS libraries and F.Ws
+
+
+JS libraries:
+
+ --> jQuery 
+
+
+     limitations of jQuery
+
+     --> close to DOM. ( when view change , we need to change js-code)
+     --> data-binding is manual.
+     --> very difficult for large-scale appln dev.
+
+
+     solns:
+
+     using Frameworks ( complete structure for js-appln dev)
+
+
+     1. Angular 1.x --> google team
+
+     2. Angular 2.x 
+
+     3. React --> facebook
+
+     4. backbone
+
+     5. EXTJS ( commercial )
+
+     6...........
+

@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>index</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body class="container">
+
+    <div class="page-header">App</div>
+    <div class="jumbotron"> welcome to web-world</div>
+    <button type="button" class="btn btn-danger">hide</button>
+    <button type="button" class="btn btn-primary">show</button>
+
+    <hr/>
+
+    <div class="page-header">data-binding</div>
+
+    <!--View-->
+
+    <div class="well">
+        Name: <input id="inpField" />
+        <button id="loadBtn" class="btn btn-sm btn-primary">Load</button>
+        <button id="resetBtn" class="btn btn-sm btn-primary">Reset</button>
+        <hr/> Hello <span id="spanEle" class="badge">(name)</span>
+    </div>
+
+
+    <div class="well" id="ko_box">
+        Name: <input data-bind="value:name" />
+        <button class="btn btn-sm btn-primary" data-bind="click:load">Load</button>
+        <button class="btn btn-sm btn-primary" data-bind="click:reset">Reset</button>
+        <hr/> Hello <span class="badge" data-bind="text:name">(name)</span>
+    </div>
+
+    <div ng-app="demo">
+        <div class="well" id="ng_box" ng-controller="UserController">
+            Name: <input ng-model="name"/>
+            <button class="btn btn-sm btn-primary" ng-click="load()">Load</button>
+            <button class="btn btn-sm btn-primary" ng-click="reset()">Reset</button>
+            <hr/> Hello <span class="badge">{{name}}</span>
+        </div>
+    </div>
+
+
+
+    <script src="lib/jquery-3.1.1.js"></script>
+    <script src="lib/knockout-latest.js"></script>
+    <script src="lib/angular.js"></script>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
