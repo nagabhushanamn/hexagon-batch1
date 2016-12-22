@@ -1,0 +1,20 @@
+<div class="product">
+    <span class="badge">{{i+1}}</span>
+    <div *ngIf="!product.notAvailable">
+        <h3>{{product.name}}</h3>
+        <h4>{{product.price}}</h4>
+        <button *ngIf="product.canBuy" (click)="buy(product.id)" class="btn btn-primary">buy</button>
+        <hr/>
+        <section>
+            <ul class="nav nav-tabs">
+                <li [ngClass]="{active:isTabSelected(1)}"><a href (click)="changeTab($event,1)">Description</a></li>
+                <li [ngClass]="{active:isTabSelected(2)}"><a href (click)="changeTab($event,2)">Specification</a></li>
+                <li [ngClass]="{active:isTabSelected(3)}"><a href (click)="changeTab($event,3)">Reviews</a></li>
+            </ul>
+            <div class="panel" *ngIf="isTabSelected(1)">
+                <p>{{product.description}}</p>
+            </div>
+            <div class="panel" *ngIf="isTabSelected(2)">Not Yet</div>
+            <div class="panel" *ngIf="isTabSelected(3)">None Yet</div>
+        </section>
+    </div>

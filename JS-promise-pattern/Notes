@@ -1,0 +1,9 @@
+
+
+Promise Pattern
+-----------------
+
+ helps you run functions asynchronously, 
+ and use their return values (or exceptions) when they are done processing.
+
+
