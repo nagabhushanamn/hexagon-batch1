@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<title>Object Parameters Web Workers Example</title>
+
+<script>
+
+	// Global variables.
+	var allWorkers = new Array();
+	var numRepliesElem;
+	var gapElem;
+	var resultAreaElem;
+	var count = 0;
+
+	// Starts a Web worker.
+	function startWorker() {
+
+		// Test whether the browser supports Web workers.
+		if (typeof(Worker) === "undefined") {
+			alert("Sorry, your browser doesn't support HTML5 Web Workers");
+
+		} else {
+			// Create a new worker.
+			var aWorker = new Worker("ObjectEchoWorker.js");
+			aWorker.addEventListener("message", onMessage, true);
+			aWorker.addEventListener("error",   onError, true);
+			
+			// Add worker to array of workers (this allows us to keep track of all the workers, so we can cancel later).
+			allWorkers.push(aWorker);
+			
+			// Start the worker, passing a JSON object as a parameter.
+			var msg        = "hi from worker " + ++count;
+			var numReplies = parseInt(numRepliesElem.value);
+			var gap        = parseInt(gapElem.value);
+			resultAreaElem.value += "Posting: " + msg + ", numReplies: " + numReplies + ", gap: " + gap + "\n";
+			
+			aWorker.postMessage({ 'msg':        msg, 
+			                      'numReplies': numReplies, 
+				                  'gap':        gap 
+			});  
+		}
+	}
+
+	// Cancels a Web worker.
+	function cancelWorker() {
+		
+		// Terminate the most recent worker created.
+		var aWorker = allWorkers.pop();
+		if (aWorker != null) {
+			aWorker.terminate();
+			resultAreaElem.value += "User cancelled worker\n";
+		}
+	}
+
+	// Handles message events from worker.
+	function onMessage(e) {
+		resultAreaElem.value += "Reply:   " + e.data.msg + ", reply " + e.data.replyNumber + " of " + e.data.totalReplies + "\n";
+	}
+
+	// Handles error events from worker.
+	function onError(e) {
+		resultAreaElem.value += "Error [" + e.filename + ", line " + e.lineno + "] " + e.message + "\n";
+	}
+
+	// Performs page initialization.
+	function onLoad() {
+	   document.getElementById("startWorkerButton").addEventListener("click", startWorker, true);
+	   document.getElementById("cancelWorkerButton").addEventListener("click", cancelWorker, true);
+
+	   numRepliesElem = document.getElementById("numReplies");
+	   gapElem        = document.getElementById("gap");
+	   resultAreaElem = document.getElementById("resultArea");
+	}
+
+	window.addEventListener("load", onLoad, true);
+
+</script>
+
+</head>
+<body class="container">
+
+	<div class="page-header">Object Parameters Web Workers Example</div>
+
+	<label for="numReplies">Number of replies:</label> 
+	<input type="Text" id="numReplies" size="15" /> 
+
+	<label for="gap">Gap (millisecs):</label>
+	<input type="Text" id="gap" size="15" /> <br/>
+	
+	<hr/>
+	
+	<button id="startWorkerButton">Start worker</button> &nbsp;
+	<button id="cancelWorkerButton">Cancel most recent worker</button> <br/><br/>
+
+	<textArea id="resultArea" rows="20" cols="70"></textArea>
+	
+</body>
+</html>

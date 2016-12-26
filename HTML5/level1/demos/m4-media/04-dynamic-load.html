@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Media: dynamic load</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <article>
+            <h1>Media<span> - dynamic load</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+
+
+            <video id="vid" 
+                   data-firstfile="video1"
+                   data-secondfile="video2" controls width="320">
+
+                <source src="../media/video1.mp4" type="video/mp4" />
+                <source src="../media/video1.ogv" type="video/ogg" />
+                <source src="../media/video1.webm" type="video/webm" />
+            </video>
+
+
+
+
+
+        </div>
+        
+        <script data-step="1" data-label="Dynamic Load">
+            var step1 = function() {
+                //---
+                var $video = $('#vid');
+
+                $video.on('play', function() {
+
+                    if (!$video.is(':visible')) {
+                        $video.fadeIn();
+                    }
+                });
+
+                $video.on('ended', function() {
+
+                    var
+                        video = this,
+
+                        sources =
+                            video.getElementsByTagName('source'),
+
+                        oldFileName =
+                            $video.attr('data-firstfile'),
+
+                        newFileName =
+                            $video.attr('data-secondfile'),
+                        
+                        forEach = Array.prototype.forEach;
+
+                    // check to see if the last video is not loaded
+                    if(sources[0].src.indexOf(newFileName) === -1){
+
+                        forEach.call(sources, function(source) {
+                            source.src =
+                                source.src.replace(oldFileName,
+                                                   newFileName);
+                        });
+
+                        $video.fadeOut(function() {
+                            video.load();
+                            video.play();
+                        });
+                    }
+                });
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

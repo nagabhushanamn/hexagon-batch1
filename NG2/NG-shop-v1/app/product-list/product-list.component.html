@@ -1,0 +1,10 @@
+<div class="product-list">
+
+    <div class="list-group">
+        <div *ngFor="let product of products;let i=index" class="list-group-item">
+            <product (buy)="buy($event)"   [product]="product" [index]="i"></product>
+        </div>
+    </div>
+</div>
+
+

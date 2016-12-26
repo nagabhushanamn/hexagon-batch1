@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Drag &amp; Drop: Changing Sort Order</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+
+            ul.moveable {
+                list-style:none;
+                margin:0px;
+            }
+
+                ul.moveable li {
+                    list-style-image:none;
+                    margin:10px;
+                    border:1px solid #ccc;
+                    padding:4px;
+                    border-radius:4px;
+                    color:#666;
+                    cursor:move;
+                }
+
+                    ul.moveable li:hover {
+                        background-color:#eee;
+                    }
+
+            [draggable="true"] {
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+
+                /* Support old versions of WebKit */
+                -khtml-user-drag: element;
+                -webkit-user-drag: element;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Drag &amp; Drop<span> - sort order</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+            <ul id="items-list" class="moveable">
+                <li><i class="icon-flag"></i> One</li>
+                <li><i class="icon-asterisk"></i> Two</li>
+                <li><i class="icon-gift"></i> Three</li>
+                <li><i class="icon-calendar"></i> Four</li>
+            </ul>
+
+
+
+        </div>
+
+        <script data-step="1" data-label="Sort Order">
+            var step1 = function() {
+                //---
+                var isDnDTypesSupported = true;
+
+                var
+                    dragStart = function(e) {
+                        var index = $(e.target).index();
+
+                        index += ''; // Convert to string for IE
+
+                        try {
+
+                            e.dataTransfer
+                                .setData('text/plain', index);
+
+                        } catch (ex) {
+
+                            e.dataTransfer
+                                .setData('Text', index);
+
+                            isDnDTypesSupported = false;
+                        }
+                    },
+
+                    dropped = function(e) {
+                        cancel(e);
+
+                        var oldIndex;
+
+                        if(isDnDTypesSupported) {
+                            oldIndex =
+                              e.dataTransfer.getData('text/plain');
+                        }
+                        else {
+                            oldIndex =
+                              e.dataTransfer.getData('Text');
+                        }
+
+                        var
+                            target = $(e.target),
+                            newIndex = target.index(),
+                            dropped = $(this)
+                                        .parent()
+                                        .children()
+                                        .eq(oldIndex);
+
+                        dropped.remove();
+
+                        if (newIndex < oldIndex) {
+                            target.before(dropped);
+                        }
+                        else {
+                            target.after(dropped);
+                        }
+                    },
+
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    },
+                    
+                    forEach = Array.prototype.forEach;
+
+                var items =
+                      document.querySelectorAll('#items-list > li');
+
+                forEach.call(items, function(item) {
+
+                    $(item).prop('draggable', true);
+
+                    item.addEventListener('dragstart',
+                                           dragStart, false);
+
+                    item.addEventListener('drop',
+                                           dropped, false);
+
+                    item.addEventListener('dragenter',
+                                           cancel, false);
+
+                    item.addEventListener('dragover',
+                                           cancel, false);
+                });
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

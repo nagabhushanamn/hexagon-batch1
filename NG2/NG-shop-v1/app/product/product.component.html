@@ -1,0 +1,56 @@
+<div class="product">
+    <span class="badge">{{index+1}}</span>
+    <div *ngIf="!product.notAvailable">
+        <h3>{{product.name | uppercase}} <small>{{product.make|date}}</small></h3>
+        <h4>{{product.price|priceDiscount:product.discount}}</h4>
+        <button *ngIf="product.canBuy" (click)="buyClickHandler($event,product.id)" class="btn btn-primary">buy</button>
+        <hr/>
+        <section>
+            <ul class="nav nav-tabs">
+                <li [ngClass]="{active:isTabSelected(1)}"><a href (click)="changeTab($event,1)">Description</a></li>
+                <li [ngClass]="{active:isTabSelected(2)}"><a href (click)="changeTab($event,2)">Specification</a></li>
+                <li [ngClass]="{active:isTabSelected(3)}"><a href (click)="changeTab($event,3)">Reviews</a></li>
+            </ul>
+            <div class="panel" *ngIf="isTabSelected(1)">
+                <p>{{product.description}}</p>
+            </div>
+            <div class="panel" *ngIf="isTabSelected(2)">Not Yet</div>
+           
+            <div class="panel" *ngIf="isTabSelected(3)">
+                
+                
+                 <div *ngFor="let review of product.reviews">
+                     <span>{{review.stars}} - {{review.author}}</span>
+                     <p>{{review.comment}}</p>
+                     <hr/>
+                 </div>  
+                 <hr/>
+
+                 <div class="row">
+                    <div class="well col-xs-12 col-md-6 col-sm-6">
+                        <span>{{review.stars}} - {{review.author}}</span>
+                        <p>{{review.comment}}</p>
+                    </div> 
+                 </div>
+                 <div class="row">
+                 <form name="reviewForm"  class="col-xs-12 col-md-6 col-sm-12">
+                     <div class="form-group">
+                         <label>stars</label>
+                         <input class="form-control" [(ngModel)]="review.stars" [ngModelOptions]="{standalone: true}"/>
+                     </div> 
+                     <div class="form-group">
+                         <label>author</label>
+                         <input class="form-control" [(ngModel)]="review.author" [ngModelOptions]="{standalone: true}"/>
+                     </div>
+                     <div class="form-group">
+                         <label>comment</label>
+                         <textarea class="form-control" [(ngModel)]="review.comment" [ngModelOptions]="{standalone: true}">
+                         </textarea>
+                     </div>  
+                     <button type="button" (click)="saveReview($event)" class="btn btn-primary">submit</button>    
+                 </form>  
+                 </div>   
+
+            </div>
+        </section>
+    </div>

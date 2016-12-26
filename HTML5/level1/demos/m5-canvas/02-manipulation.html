@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Canvas Manipulation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <article>
+            <h1>Canvas Manipulation</h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <canvas id="canvas" width="345" height="345">
+                <p>Your browser does not support the canvas element.</p>
+            </canvas>
+        </div>
+        
+        <script data-step="1" data-label="Scaling">
+            var step1 = function() {
+                //---
+                var
+                    canvas = document.getElementById("canvas"),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext("2d");
+
+                    var img = new Image();
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+                    }
+                    img.src = "../img/fist-pump-baby.jpg";
+
+                    // un comment to scale the chart
+                    //context.scale(.5, .5); // 0.5 orig. size
+                    //context.scale(2, 2); // 2x orig. size
+
+                    // arguments do not need to be equal
+                    context.scale(.25,.5); 
+                }
+                //---
+            }
+        </script>
+        <script data-step="2" data-label="Rotating">
+            var step2 = function() {
+                //---
+                var degreesToRadians = function(degrees) {
+                    var radians = (degrees * (Math.PI / 180));
+                    return radians;
+                }
+
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    var img = new Image();
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+                        
+                    }
+                    img.src = '../img/fist-pump-baby.jpg';
+
+                    // un-comment to rotate the chart using radians
+                    context.rotate(0.2);
+
+                    //context.rotate(degreesToRadians(-15));
+                }
+                //---
+            }
+        </script>
+        <script data-step="3" data-label="Translate">
+            var step3 = function() {
+                //---
+                var
+                    canvas = document.querySelector('#canvas'),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    //* uncomment to move the base coordinates
+                    context.translate(100, 100);
+                    //*/
+
+                    var
+                        text,
+                        img = new Image();
+
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+
+                        text = 'CONFIDENCE';
+
+                        context.fillStyle = '#ffffff';
+                        context.strokeStyle = '#000000';
+                        context.lineWidth = 6;
+
+                        context.font = '3em Impact';
+                        context.strokeText(text, 55, 55);
+                        context.fillText(text, 55, 55);
+
+                        text = 'Knows No Age';
+
+                        context.font = '2em Impact';
+                        context.strokeText(text, 80, 300);
+                        context.fillText(text, 80, 300);
+                    }
+                    img.src = '../img/fist-pump-baby.jpg';
+
+                    
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="4" data-label="State">
+            var step4 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    // red box
+                    context.fillStyle = 'rgb(500,0,0)';
+                    context.fillRect(
+                        50,     // x coord
+                        50,     // y coord
+                        100,    // width
+                        100);   // height
+
+                    context.save();
+
+                    // *************************
+                    context.translate(100, 100);
+                    context.rotate(.5);
+                    context.scale(.5, .5);
+
+                    // blue box
+                    context.fillStyle = 'rgba(0, 0, 500, 0.5)';
+                    context.fillRect(
+                        80,     // x coord
+                        80,     // y coord
+                        100,    // width
+                        100);   // height
+                    // *************************
+
+                    context.restore();
+
+                    // clear box
+                    context.clearRect(
+                        115,    // x coord
+                        115,    // y coord
+                        20,     // width
+                        20);    // height
+
+                    // green outline
+                    context.strokeStyle = 'rgb(51,153,0)';
+                    context.lineWidth = 6;
+                    context.strokeRect(115, 115, 20, 20);
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="5" data-label="Animation">
+            var step5 = function() {
+                //---
+                var
+                    x = 0,
+                    y = 0,
+                    frame,
+                    canvas = document.getElementById('canvas'),
+                    context = canvas.getContext('2d');
+
+                var draw = function() {
+
+                    if (x <= canvas.width) {
+                        context.clearRect(0, 0, 345, 345);
+                        context.strokeStyle = 'rgb(139, 0, 0)';
+                        context.lineWidth = 8;
+                        context.beginPath();
+                        context.moveTo(0, 0);
+                        context.lineTo(x += 10, y += 10);
+                        context.stroke();
+                    }
+                    else {
+                        clearInterval(frame);
+                        logBold('Animation Complete');
+                    }
+                }
+
+                if (Modernizr.canvas) {
+                    frame = setInterval(function() {
+                        draw();
+                    }, 25);
+                }
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                step1: step1,
+                step2: step2,
+                step3: step3,
+                step4: step4,
+                step5: step5
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

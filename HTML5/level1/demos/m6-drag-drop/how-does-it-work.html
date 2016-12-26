@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Drag &amp; Drop: Module</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <style>
+            /* Safari support */
+            [draggable="true"] {
+                -khtml-user-drag: element;
+            }
+
+            div[draggable="true"], [data-dnd-role="draggable"] {
+                cursor:move;
+            }
+
+            .over {
+                background-color:#fff;
+                border:1px dashed #999;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+
+            <div class="row">
+                <div class="span5 offset1">
+                    <div>
+                        <div 
+                            class="well"
+                            data-dnd-role="draggable"
+                            data-dnd-effectallowed="all"
+                            data-dnd-datatype="text/plain">
+                            <h4>Drag Source</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="span5 offset1">
+                    <div>
+                        <div 
+                            class="well" 
+                            data-dnd-role="dropzone" 
+                            data-dnd-dropeffect="link">
+                            <h4>Drop Target: <span id="count">0</span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <script src="../js/jquery.js"></script>
+        <script src="drag-drop.js"></script>
+        <script>
+            $(function() {
+
+                dragDrop.setDragClassName('over');
+
+                var dropped = function(e) {
+                    var
+                        countElement = $(this.querySelector('#count')),
+                        count = countElement.text();
+
+                    count++;
+
+                    countElement.text(count);
+                };
+
+                $('[data-dnd-role="dropzone"]').each(function(index, dropZone) {
+                    dropZone.addEventListener('drop', dropped, false);
+                });
+
+                $('article').fadeIn();
+            });
+        </script>
+    </body>
+</html>

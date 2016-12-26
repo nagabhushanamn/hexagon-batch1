@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Canvas: Video Thumbnails</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+
+            #thumbs {
+                margin-top:15px;
+                width: 80%;
+                height: 300px;
+                border: 1px solid #ccc;
+                background-color: #ddd;
+                overflow:auto;
+            }
+
+            #thumbs img {
+                padding: 4px;
+            }
+
+            #vid, #thumbs {
+                width: 320px;
+                height: 180px;
+            }
+
+    </style>
+    </head>
+    <body>
+        <article>
+            <h1>Canvas<span> - video thumbnails</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <div id="player">
+                <video id="vid" controls>
+                    <source src="../media/big_buck_bunny.mp4" type="video/mp4" />
+                    <source src="../media/big_buck_bunny.ogv" type="video/ogg" />
+                    <source src="../media/big_buck_bunny.webm" type="video/webm" />
+                </video>
+            </div>
+            <button id="btn" class="btn btn-mini push-down">Get Thumbnail</button>
+            <div id="thumbs"></div>
+            <canvas id="canvas" class="hidden">
+                <p>Your browser does not support the canvas element.</p>
+            </canvas>
+        </div>
+        
+        <script data-step="1" data-label="Video Thumbnails">
+            var step1 = function() {
+                //---
+                var
+                    video = document.querySelector('#vid'),
+                    canvas = document.querySelector('#canvas'),
+                    context = null,
+                    btn = $('#btn'),
+                    thumbs = $('#thumbs'),
+                    thumbInterval = null;
+
+                if (Modernizr.canvas) {
+                    context = canvas.getContext('2d');
+
+                    var width =
+                            video.width =
+                            canvas.width =
+                            video.offsetWidth = 320;
+
+                    var height =
+                            video.height =
+                            canvas.height =
+                            video.offsetHeight = 180;
+
+                    var getThumb = function() {
+
+                            context.drawImage(video,
+                                              0,
+                                              0,
+                                              width,
+                                              height);
+
+                            var thumb = new Image();
+
+                            thumb.src =
+                                canvas.toDataURL('image/png');
+
+                            thumb.width = 60;
+                            thumbs.append(thumb);
+                        };
+
+                    btn.click(function() {
+                        getThumb();
+                    });
+
+                    video.addEventListener('play', function() {
+                        thumbInterval = setInterval(function() {
+                            getThumb();
+                        }, 4000);
+                    }, false);
+
+                    video.addEventListener('pause', function() {
+                        clearInterval(thumbInterval);
+                    }, false);
+                }
+
+                
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep : 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

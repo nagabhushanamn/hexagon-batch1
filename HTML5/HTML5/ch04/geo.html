@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML-5 learn</title>
+	<style>
+		body {
+			font-family: calibri, arial;
+			font-size: 12pt;
+		}
+	
+		input {
+			background-color: lightblue;
+		}
+		
+		#messageArea {
+			background-color: lightblue;
+			width: 600px;
+		}
+		
+		#resultArea {
+			border: 1px solid blue;
+			background-color: yellow;
+			padding: 0px 20px 20px 20px;
+			width: 400px;
+			float: right;
+		}
+		
+		label {
+			width: 150px;
+			float: left;
+		}
+	
+	</style>
+
+	<script>
+	
+	var messageAreaElem;
+		
+		// Handles the "Get Current Position" button click.
+		function doGet() {
+		
+			// Test if the browser supports geolocation.
+	        if (navigator.geolocation) {
+			
+				// Tell the user the browser does support geolocation.
+	            messageAreaElem.innerHTML = "Your browser does support HTML5 geolocation.";
+				
+				// Request the current position.
+	            navigator.geolocation.getCurrentPosition(positionCallback, positionErrorCallback);
+				
+	        } else {
+	
+				// Tell the user the browser does not support geolocation.
+	            messageAreaElem.innerHTML = "Your browser does not support HTML5 geolocation.";
+			}
+		}
+	
+		
+		// Geolocation callback, receives position information.
+	    function positionCallback(position) {
+	
+			var latitude  = position.coords.latitude;		// 0 is the Equator, +ve is north, -ve is south.
+	        var longitude = position.coords.longitude;		// 0 is the Greenwich Meridian, +ve is east, -ve is west.
+			var accuracy  = position.coords.accuracy;
+			var heading   = position.coords.heading;
+			var speed     = position.coords.speed;
+			var altitude  = position.coords.altitude;
+			var altitudeAccuracy  = position.coords.altitudeAccuracy;
+			
+			var timestamp = new Date();
+			timestamp.setTime(position.timestamp);
+			
+	        if (!latitude || !longitude) {
+	            messageAreaElem.innerHTML = "HTML5 Geolocation is supported in your browser, but location is currently not available.";
+				
+			} else {
+	
+				document.getElementById("latitude").value  = latitude;
+				document.getElementById("longitude").value = longitude;
+				document.getElementById("locationAccuracy").value  = accuracy;
+				document.getElementById("heading").value   = heading;
+				document.getElementById("speed").value     = speed;
+				document.getElementById("altitude").value  = altitude;
+				document.getElementById("altitudeAccuracy").value  = altitudeAccuracy;
+				document.getElementById("timestamp").value = timestamp;
+			}
+	    }
+	
+		// Geolocation callback, handles position errors.
+		// The error code is one of the following:
+		//    PositionError.PERMISSION_DENIED
+		//    PositionError.POSITION_UNAVAILABLE
+		//    PositionError.TIMEOUT
+	    function positionErrorCallback(error) {
+			messageAreaElem.innerHTML = "Error " + error.code + ", " + error.message;
+	    }
+	
+		// Performs page initialization.
+		function onLoad() {
+			document.getElementById("getButton").addEventListener("click", doGet, true);
+			messageAreaElem = document.getElementById("messageArea");
+		}
+		
+		window.addEventListener("load", onLoad, true);
+		
+		
+	</script>
+	
+	
+</head>
+<body style="margin: 50px">
+
+	<div class="container">
+	
+		<div class="page-header"> GEO  - current position </div><hr/>
+		
+		<div id="resultArea">
+		<h3>Core information</h3>
+		<label>Latitude (degrees)</label>
+		<input type="text" id="latitude" size="60" readonly="true" /> <br/>
+
+		<label>Longitude (degrees)</label>
+		<input type="text" id="longitude" size="60" readonly="true" /> <br/>
+
+		<label>Location accuracy (m)</label>
+		<input type="text" id="locationAccuracy" size="60" readonly="true" />
+
+		
+		<h3>Optional information</h3>
+		<label>Heading (degrees)</label>
+		<input type="text" id="heading" size="60" readonly="true" /> <br/>
+
+		<label>Speed (m/s)</label>
+		<input type="text" id="speed" size="60" readonly="true" /> <br/>
+
+		<label>Altitude (m)</label>
+		<input type="text" id="altitude" size="60" readonly="true" /> <br/>
+
+		<label>Altitude accuracy (m)</label>
+		<input type="text" id="altitudeAccuracy" size="60" readonly="true" /> <br/>
+
+		<label>Timestamp</label>
+		<input type="text" id="timestamp" size="60" readonly="true" />
+		</div>
+
+
+		<button id="getButton">Get Current Position</button>  <br/><br/>
+	
+		<div id="messageArea"></div>
+		
+			
+	</div>
+
+</body>
+</html>

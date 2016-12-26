@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Main</title>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+	<script>
+	
+		//Global variables.
+		var balance = 0.0;
+		var childWindowUrl = "http://127.0.0.1:63253/ch01/ChildWindow.html";
+		var childWindows = new Array();
+		
+		function deposit() {
+			var amountBox = document.querySelector("#amount");
+			balance += parseFloat(amountBox.value);
+			alert("New balance is " + balance);
+		}
+			
+		function withdraw() {
+			var amountBox = document.querySelector("#amount");
+			balance -= parseFloat(amountBox.value);
+			alert("New balance is " + balance);
+		}
+		
+	
+		function newWindow() {
+			var win = window.open(childWindowUrl, "");
+			childWindows.push(win);
+		}
+		
+		function broadcast() {
+			for (var i = 0; i < childWindows.length; i++) {
+				// Post a cross-domain message. The 2nd parameter can be one of the following values:
+				//    - Expected origin of target
+				//    - * (if you don't care)
+				//    - / (if it must be the same as the sender)
+				childWindows[i].postMessage(balance, "");
+			}
+		}
+		
+		
+		// Handle messages sent from child window.
+		function onMessage(e) {
+	
+			if (e.origin == "http://127.0.0.1:63253") {		
+				alert("Main window accepting message from " + e.origin);
+				balance -= e.data;
+				broadcast();
+			} else {
+				alert("Child window rejecting message from " + e.origin);
+			}
+		}
+	
+		// Set up a handler for messages sent from the child window.
+		window.addEventListener("message", onMessage, true);
+		
+	</script>
+</head>
+<body>
+
+	<div class="container">
+	
+		<div class="page-header">cross domain Messaging API</div>
+		
+		<label>Amount</label>
+		<input type="text" id="amount" />
+		<button onclick="deposit()">Deposit</button>
+		<button onclick="withdraw()">Withdraw</button>
+		
+		<hr/>
+		
+		<button onclick="newWindow()">New Window</button>
+		<button onclick="broadcast()">Broadcast</button>
+		
+		<hr/>
+			
+	</div>
+
+</body>
+</html>

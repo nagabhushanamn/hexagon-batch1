@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML-5 learn</title>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+	<script>
+	
+		// Global variables.
+		var targetLocation = "http://localhost:9999/upload";
+		var messageAreaElem;
+		var progressBarElem;
+		
+		
+		// Handles the "Start Upload" button click.
+		function doStartUpload() {
+
+			progressBarElem.value = 0;
+			messageAreaElem.innerHTML = "";
+			
+			// Get the file selected by the user.
+			var fileElem = document.getElementById("file");
+			if (fileElem.files.length == 0) {
+				messageAreaElem.innerHTML = "You must select a file to upload first";
+				
+			} else {
+				messageAreaElem.innerHTML = "Opening file...";
+			
+				// Start reading the file into memory.
+				var reader = new FileReader();
+				reader.onloadend = doUpload;
+				reader.readAsArrayBuffer(fileElem.files[0]);
+			}
+		}
+		
+		
+		// Handles the "file loaded into memory" event.
+		function doUpload(e) {
+		
+			messageAreaElem.innerHTML = "Uploading file to server...";
+			
+			// Create an XMLHttpRequest object.
+			var xhr = new XMLHttpRequest();
+
+			// Handle "upload progress" events on the XMLHttpRequest object.
+			xhr.upload.onprogress = function(e) {
+				var percentUploaded = Math.floor(100 * e.loaded / e.total);
+				progressBarElem.value = percentUploaded;
+				messageAreaElem.innerHTML = percentUploaded + "% uploaded";
+			}
+					
+			// Handle "download progress" events on the XMLHttpRequest object.
+			xhr.onprogress = function(e) {
+				var percentDownloaded = Math.floor(100 * e.loaded / e.total);
+				progressBarElem.value = percentDownloaded;
+				messageAreaElem.innerHTML = percentDownloaded + "% downloaded";
+			}
+
+			// Handle "Finished upload/download" events on the XMLHttpRequest object.
+			xhr.onload = function(e) {
+				messageAreaElem.innerHTML = "Finished";
+			}
+
+			// Handle "Error" events on the XMLHttpRequest object.
+			xhr.onerror = function(e) {
+				messageAreaElem.innerHTML = "Error occurred";
+			}
+
+			// Upload the file data asynchronously to the server, using the XMLHttpRequest object.
+			xhr.open("POST", targetLocation, true);
+			xhr.send(e.target.result);
+		}
+		
+		
+		// Performs page initialization.
+		function onLoad() {
+			document.getElementById("startUpload").addEventListener("click", doStartUpload, true);	   
+			messageAreaElem = document.getElementById("messageArea");
+			progressBarElem = document.getElementById("progressBar");
+		}
+
+		window.addEventListener("load", onLoad, true);
+		
+		
+	</script>
+	
+	
+</head>
+<body>
+
+	<div class="container">
+	
+		<div class="page-header"> XHR level-2  ( more events and CORS support)</div>
+		
+		<input type="file" id="file" multiple/> <br/>
+		<button id="startUpload">Start Upload</button> <br/><br/>
+	
+		<progress id="progressBar" value="0" max="100"></progress> 
+		<span id="messageArea"></span>
+		
+			
+	</div>
+
+</body>
+</html>

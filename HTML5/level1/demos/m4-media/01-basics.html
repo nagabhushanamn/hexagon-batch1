@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Media: Native Support</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <article>
+            <h1>Media<span> - native support</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+
+
+
+    <h4>Video</h4>
+    <video controls loop preload poster="../img/bbb.png" width="320">
+        <source src="../media/big_buck_bunny.mp4" /><!-- Serve first for iPad -->
+        <source src="../media/big_buck_bunny.ogv" />
+        <source src="../media/big_buck_bunny.webm" />
+    </video>
+    <span class="btn-mini">Video courtesy of 
+        <a href="http://www.bigbuckbunny.org/">Big Buck Bunny</a></span>
+
+    <hr />
+
+    <h4>Audio</h4>
+    <audio controls="true">
+        <source src="../media/PolymorphicPodcast-clip.mp3" />
+        <source src="../media/PolymorphicPodcast-clip.ogg" />
+        <source src="../media/PolymorphicPodcast-clip.wav" />
+    </audio>
+
+
+
+
+
+
+
+
+
+        </div>
+        
+        <script data-step="1" data-label="Native Support">
+            var step1 = function() {
+                //---
+                // This sample requires no JavaScript.
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                hideCommandButtons: true,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

@@ -1,0 +1,9 @@
+<div class="panel panel-default" *ngIf="hero">
+    <div class="panel panel-heading">{{hero.name}} details</div>
+    <div class="panel-body">
+        <div><label>id:</label>{{hero.id}}</div>
+        <div><label>Name:</label> <input [(ngModel)]="hero.name" placeholder="name" /> </div>
+    </div>
+    <button (click)="save()">Save</button>
+    <button (click)="goBack()">Back</button><br/>
+</div>

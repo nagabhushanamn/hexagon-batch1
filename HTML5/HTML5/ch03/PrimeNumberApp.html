@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prime Numbers Application</title>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">	
+<script>
+
+	// Global variables.
+	var primesWorker = null;
+	var lowerNumberElem;
+	var upperNumberElem;
+	var messageAreaElem;
+	var resultAreaElem;
+
+	// Starts a worker to find prime numbers.
+	function findPrimes() {
+
+		// Update UI controls in readiness for the new worker.
+		messageAreaElem.innerHTML = "Starting worker...";
+		resultAreaElem.value = "";
+
+		// Create a new worker.
+		primesWorker = new Worker("GetPrimeNumbers.js");
+		primesWorker.addEventListener("message", onMessage, true);
+		primesWorker.addEventListener("error",   onError, true);
+		
+		// Start the worker, passing a JSON object as a parameter.
+		primesWorker.postMessage({
+			'lowerNumber': parseInt(lowerNumberElem.value), 
+			'upperNumber': parseInt(upperNumberElem.value), 
+			'startTime':   new Date()
+		});  
+	}
+
+	// Cancels a worker that was finding prime numbers.
+	function cancelWorker() {
+		if (primesWorker != null) {
+			primesWorker.terminate();
+			primesWorker = null;
+		}
+		messageAreaElem.innerHTML = "User cancelled worker";
+	}
+
+	// Handles message events from worker.
+	function onMessage(e) {
+
+		if (e.data.type == "debug") {
+			console.log(e.data.message);
+		}
+		else if (e.data.type == "problem") {
+			messageAreaElem.innerHTML = "Problem occurred: " + e.data.message;
+		}
+		else if (e.data.type == "result") {
+			messageAreaElem.innerHTML = "The worker that started at " + e.data.startTime.toTimeString() + " has ended at " + e.data.endTime.toTimeString();
+			resultAreaElem.value = e.data.allPrimes;
+		}
+	}
+
+	// Handles error events from worker.
+	function onError(e) {
+		messageAreaElem.innerHTML = "Error [" + e.filename + ", line " + e.lineno + "] " + e.message;
+	}
+
+	// Performs page initialization.
+	function onLoad() {
+	   document.getElementById("findPrimesButton").addEventListener("click", findPrimes, true);
+	   document.getElementById("cancelWorkerButton").addEventListener("click", cancelWorker, true);
+	   
+	   lowerNumberElem = document.getElementById("lowerNumber");
+	   upperNumberElem = document.getElementById("upperNumber");
+	   messageAreaElem = document.getElementById("messageArea");
+	   resultAreaElem  = document.getElementById("resultArea");
+	}
+
+	window.addEventListener("load", onLoad, true);
+
+</script>
+	
+</head>
+<body class="container">
+
+	<div class="page-header">Prime Numbers Application</div>
+
+	<label for="lowerNumber">Lower number:</label> 
+	<input type="Text" id="lowerNumber" size="15" /> <br/>
+
+	<label for="upperNumber">Upper number:</label> 
+	<input type="Text" id="upperNumber" size="15" /> <br/><br/>
+
+	<input type="button" value="Find primes"   id="findPrimesButton" /> &nbsp;
+	<input type="button" value="Cancel worker" id="cancelWorkerButton" /> <br/><br/>
+
+	<div id="messageArea"></div> <br/>
+
+	<textArea id="resultArea" rows="20" cols="50"></textArea>
+
+</body>
+</html>

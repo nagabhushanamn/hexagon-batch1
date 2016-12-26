@@ -1,0 +1,29 @@
+Node.js
+-------
+http://nodejs.org
+
+
+Microsoft WCF WebSockets Prototype
+----------------------------------
+http://html5labs.interoperabilitybridges.com/prototypes/websockets/websockets/download
+
+
+PHP
+---
+http://code.google.com/p/phpwebsocket/
+
+
+Apache HTTP Server extension
+----------------------------
+http://code.google.com/p/pywebsocket/
+
+
+Java
+----
+http://jwebsocket.org/ 
+
+
+Ruby
+----
+https://github.com/gimite/web-socket-ruby 
+

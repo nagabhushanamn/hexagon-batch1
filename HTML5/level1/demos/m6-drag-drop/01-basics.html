@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Drag &amp; Drop: Basics</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            [data-role="drag-drop-container"] {
+                float:left;
+                width:100px;
+                height:100px;
+                margin:10px;
+                padding:10px;
+                border:3px solid #ddd;
+                border-radius:4px;
+            }
+
+            .over {
+                background-color:#ffc;
+            }
+
+            [draggable="true"] {
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+
+                /* Support old versions of WebKit */
+                -khtml-user-drag: element;
+                -webkit-user-drag: element;
+            }
+
+            .drag {
+                opacity:0.25;
+            }
+
+
+
+        </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+    <body>
+        <article>
+            <h1>Drag &amp; Drop<span> - basics</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+
+
+            <div id="source-container" data-role="drag-drop-container">
+                <img id="ps-logo" 
+                     draggable="true" 
+                     src="../img/ps-circle.png" />
+            </div>
+            <div id="target-container" data-role="drag-drop-container"></div>
+
+
+
+
+            <div style="clear:both;"></div>
+        </div>
+
+        <script data-step="1" data-label="Basics">
+            var step1 = function() {
+                //---
+                var
+                    dragStart = function(e) {
+
+                        // IE doesn't support text/plain
+                        try {
+
+                            e.dataTransfer
+                                .setData('text/plain',
+                                    e.target.id);
+
+                        } catch (ex) {
+
+                            e.dataTransfer
+                                .setData('Text', e.target.id);
+                        }
+                    },
+
+                    dropped = function(e) {
+                        cancel(e);
+
+                        var id;
+
+                        try {
+
+                            id = e.dataTransfer
+                                    .getData('text/plain');
+
+                        } catch (ex) {
+
+                            id = e.dataTransfer
+                                    .getData('Text');
+                        }
+
+                        
+                        e.target.appendChild(
+                            document.querySelector('#' + id));
+                    },
+
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+                        
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    };
+
+                var img = document.querySelector('#ps-logo');
+                img.addEventListener('dragstart', dragStart,false);
+
+                var
+                    selector = '#target-container',
+                    target = document.querySelector(selector);
+
+                target.addEventListener('drop', dropped,false);
+                target.addEventListener('dragenter', cancel,false);
+                target.addEventListener('dragover', cancel,false);
+
+                
+                //---
+            }
+        </script>
+
+        <script data-step="2" data-label="Basics (with role selectors)">
+            var step2 = function() {
+                //---
+                var
+                    sourceContainerId = '',
+
+                    dragStart = function(e) {
+
+                        try {
+
+                            e.dataTransfer
+                                .setData('text/plain', e.target.id);
+
+                        } catch (ex) {
+
+                            e.dataTransfer
+                                .setData('Text', e.target.id);
+                        }
+
+                        sourceContainerId = this.parentElement.id;
+                    },
+
+                    dropped = function(e) {
+                        if (this.id !== sourceContainerId) {
+
+                            cancel(e);
+
+                            var id;
+
+                            try {
+
+                                id = e.dataTransfer
+                                        .getData('text/plain');
+
+                            } catch (ex) {
+
+                                id = e.dataTransfer
+                                        .getData('Text');
+                            }
+                            
+                            e.target.appendChild(
+                                document.querySelector('#' + id));
+                        }
+                    },
+
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    },
+                    
+                    forEach = Array.prototype.forEach;
+
+                var
+                    selector = '[data-role="drag-drop-container"]',
+                    dc = document.
+                        querySelectorAll(selector);
+
+                forEach.call(dc, function(c) {
+                    c.addEventListener('drop', dropped, false);
+                    c.addEventListener('dragenter', cancel, false);
+                    c.addEventListener('dragover', cancel, false);
+                });
+
+                var
+                    selector = '[draggable="true"]',
+                    ds = document.querySelectorAll(selector);
+
+                forEach.call(ds, function(source) {
+
+                    source.addEventListener('dragstart',
+                                            dragStart,
+                                            false);
+                });
+                //---
+            }
+        </script>
+        
+        <script data-step="3" data-label="Events">
+            var step3 = function() {
+                //---
+                var
+                    sourceContainerId = '',
+
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    },
+
+                    dragStart = function(e) {
+                        log('dragstart');
+
+                        try {
+
+                            e.dataTransfer
+                                .setData('text/plain', e.target.id);
+
+                        } catch (ex) {
+
+                            e.dataTransfer
+                                .setData('Text', e.target.id);
+                        }
+
+                        e.dataTransfer.effectAllowed = 'move';
+
+                        sourceContainerId = this.parentElement.id;
+                    },
+
+                    dropped = function(e) {
+                        logBold('drop');
+                        if (this.id !== sourceContainerId) {
+
+                            cancel(e);
+
+                            var id;
+
+                            try {
+
+                                id = e.dataTransfer
+                                    .getData('text/plain');
+
+                            } catch (ex) {
+
+                                id = e.dataTransfer
+                                    .getData('Text');
+                            }
+
+                            e.target.appendChild(
+                                document.querySelector('#' + id));
+                        }
+                    },
+
+                    dragEnter = function(e) {
+                        cancel(e);
+                        logBold('dragenter');
+                    },
+
+                    dragOver = function(e) {
+                        cancel(e);
+                        log('dragover');
+                    },
+                    
+                    dragLeave = function(e) {
+                        logBold('dragleave');
+                    },
+
+                    dragEnd = function(e) {
+                        logBold('dragend');
+                    },
+                    
+                    drag = function(e) {
+                        log('drag');
+                    },
+                    
+                    forEach = Array.prototype.forEach;
+
+                var
+                    selector = '[data-role="drag-drop-container"]',
+                    containers = document.
+                        querySelectorAll(selector);
+
+                forEach.call(containers, function(c) {
+                    c.addEventListener('drop', dropped, false);
+                    c.addEventListener('dragenter', dragEnter, false);
+                    c.addEventListener('dragover', dragOver, false);
+                    c.addEventListener('dragleave', dragLeave, false);
+                });
+
+                var
+                    selector = '[draggable="true"]',
+                    sources = document.querySelectorAll(selector);
+
+                forEach.call(sources, function(src) {
+                    src.addEventListener('dragstart', dragStart, false);
+                    src.addEventListener('drag', drag, false);
+                    src.addEventListener('dragend', dragEnd, false);
+                });
+                //---
+            }
+        </script>
+
+        <script data-step="4" data-label="Styling Drop Targets">
+            var step4 = function() {
+                //---
+                var
+                    sourceContainerId = '',
+
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    },
+
+                    dragStart = function(e) {
+
+                        $(this).addClass('drag');
+
+                        var dto = e.dataTransfer;
+
+                        try {
+
+                            dto.setData('text/plain',
+                                        e.target.id);
+
+                        } catch (ex) {
+
+                            dto.setData('Text',
+                                        e.target.id);
+                        }
+                        
+                        sourceContainerId = this.parentElement.id;
+                    },
+
+                    dropped = function(e) {
+
+                        cancel(e);
+
+                        var
+                            id = null,
+                            dto = e.dataTransfer,
+                            dropped = null;
+
+                        if (dto.types.length > 0) {
+                            if (dto.types[0] === 'Text') {
+                                id = dto.getData('Text');
+                            }
+                            else {
+                                id = dto.getData('text/plain');
+                            }
+                        }
+
+                        if (id !== null) {
+                            dropped =
+                                document.querySelector('#' + id);
+                        }
+
+                        if (this.id !== sourceContainerId) {
+                            e.target.appendChild(dropped);
+                            $(dropped).removeClass('drag');
+                        }
+
+                        $(this).removeClass('over');
+                    },
+
+                    dragOver = function(e) {
+                        cancel(e);
+
+                        $(this).addClass('over');
+                    },
+
+                    dragLeave = function(e) {
+                        $(this).removeClass('over');
+                    },
+                    
+                    dragEnd = function(e) {
+                        $('.drag').removeClass('drag');
+                        $('.over').removeClass('over');
+                    };
+
+                var
+                    selector = '[data-role="drag-drop-container"]',
+                    containers = $(selector);
+
+                containers.each(function(index, c) {
+                  c.addEventListener('drop', dropped,false);
+                  c.addEventListener('dragenter', cancel,false);
+                  c.addEventListener('dragover', dragOver, false);
+                  c.addEventListener('dragleave', dragLeave, false);
+                });
+
+                var
+                    sources = $('[draggable="true"]');
+
+                sources.each(function(index, source) {
+                    source.addEventListener('dragstart',
+                                             dragStart,
+                                             false);
+
+                    source.addEventListener('dragend',
+                                             dragEnd,
+                                             false);
+                });
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                step1: step1,
+                step2: step2,
+                step3: step3,
+                step4: step4
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

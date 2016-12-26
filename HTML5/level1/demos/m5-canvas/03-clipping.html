@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Clipping</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <article>
+            <h1>Clipping</h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <canvas id="canvas" width="345" height="345">
+                <p>Your browser does not support the canvas element.</p>
+            </canvas>
+        </div>
+        
+        <script data-step="1" data-label="Circle">
+            var step1 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    context.beginPath();
+                    context.arc(
+                        135,
+                        120,
+                        120,
+                        0,
+                        Math.PI * 2,
+                        true);
+                    context.clip();
+
+                    var img = new Image();
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+
+                        context.lineWidth = 15;
+                        context.strokeStyle = '#cccccc';
+                        context.stroke();
+                    }
+                    img.src = '../img/fist-pump-baby.jpg';
+                }
+                //---
+            }
+        </script>
+        <script data-step="2" data-label="Rectangle">
+            var step2 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null,
+                    x = 40,
+                    y = 25,
+                    width = height = 200;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    context.beginPath();
+                    context.rect(x, y, width, height);
+                    context.clip();
+
+                    var img = new Image();
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+                        context.lineWidth = 15;
+                        context.strokeStyle = '#cccccc';
+                        context.strokeRect(x, y, width, height);
+                    }
+                    img.src = '../img/fist-pump-baby.jpg';
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="3" data-label="Boundaries">
+            var step3 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null,
+                    x = 40,
+                    y = 25,
+                    width = height = 200;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    context.beginPath();
+                    context.rect(x, y, width, height);
+                    context.clip();
+
+                    var img = new Image();
+                    img.onload = function() {
+                        context.drawImage(img, 0, 0);
+                        context.lineWidth = 15;
+                        context.strokeStyle = '#cccccc';
+                        context.strokeRect(x, y, width, height);
+
+                        context.fillStyle =
+                                'rgba(153, 153, 153, 0.75)';
+
+                        context.fillRect(0, 0, 100, 100);
+                    }
+                    img.src = '../img/fist-pump-baby.jpg';
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="4" data-label="Reset">
+            var step4 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    width = canvas.width,
+                    height = canvas.height,
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    context.fillStyle =
+                        'rgba(153, 153, 153, 0.75)';
+
+                    context.strokeStyle = '#999999';
+                    context.lineWidth = 5;
+                    context.lineCap = 'round';
+
+                    context.save();
+
+                    context.beginPath();
+                    context.moveTo(105, 105);
+                    context.lineTo(200, 100);
+                    context.lineTo(250, 300);
+                    context.lineTo(300, 0);
+                    context.closePath();
+                    context.stroke();
+                    context.clip();
+
+                    context.fillRect(0, 0, 215, 215);
+
+                    //you can't reset the clip like this...
+                    //context.rect(0, 0, width, height);
+                    //context.clip();
+
+                    context.restore();
+
+                    context.fillRect(200, 200, 50, 50);
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="5" data-label="Non-contiguious">
+            var step5 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    context = null;
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    context.fillStyle =
+                        'rgba(153, 153, 153, 0.75)';
+
+                    context.strokeStyle = '#999';
+                    context.lineWidth = 5;
+                    context.lineCap = 'round';
+                    
+                    context.save();
+
+                    context.rect(0, 0, 100, 100);
+                    context.rect(105, 0, 100, 100);
+                    context.clip();
+                    context.stroke();
+
+                    context.fillRect(0, 0, 300, 300);
+
+                    context.restore();
+
+                    context.fillRect(0, 105, 100, 100);
+                }
+                //---
+            }
+        </script>
+
+        <script data-step="6" data-label="Magnifier">
+            var step6 = function() {
+                //---
+                var
+                    canvas = document.getElementById('canvas'),
+                    img = new Image(),
+                    context = null,
+                    dataUrl = null,
+                    isMagnified = false,
+
+                    init = function() {
+                        img.onload = function() {
+                            context.drawImage(img, 0, 0);
+                            debugger;
+                            dataUrl = canvas.toDataURL();
+                        }
+                        img.src = '../img/fist-pump-baby.jpg';
+                        isMagnified = false;
+                    },
+                    
+                    magnify = function() {
+                        context.save();
+                        context.lineWidth = 10;
+                        context.shadowColor = '#000';
+                        context.shadowBlur = 15;
+                        context.shadowOffsetX = 5;
+                        context.shadowOffsetY = 5;
+
+                        context.save();
+
+                        context.beginPath();
+                        context.moveTo(230, 230);
+
+                        context.lineCap = 'round';
+                        context.lineWidth = 30;
+                        context.lineTo(285, 285);
+                        context.stroke();
+
+                        context.beginPath();
+
+                        context.arc(
+                                    150,
+                                    150,
+                                    115,
+                                    0,
+                                    Math.PI * 2,
+                                    true);
+
+                        context.clip();
+
+                        var magnified = new Image();
+                        magnified.src = dataUrl;
+
+                        context.scale(1.5, 1.5);
+                        context.drawImage(img, -40, -40);
+
+                        context.restore();
+
+                        context.arc(
+                                    150,
+                                    150,
+                                    115,
+                                    0,
+                                    Math.PI * 2,
+                                    true);
+                        context.stroke();
+                        context.restore();
+
+
+                        isMagnified = true;
+                    };
+
+                if (Modernizr.canvas) {
+
+                    context = canvas.getContext('2d');
+
+                    init();
+                    
+                    $('canvas').click(function() {
+                        if (isMagnified) {
+                            init();
+                        }
+                        else {
+                            magnify();
+                        }
+                    });
+                }
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                step1: step1,
+                step2: step2,
+                step3: step3,
+                step4: step4,
+                step5: step5,
+                step6: step6
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

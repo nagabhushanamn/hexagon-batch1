@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Forms: Validation Messages</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            input:valid {
+                background: #fff;
+            }
+
+            input:invalid {
+                background: #fcc;
+                color: #333;
+            }
+
+            .validation-messages {
+                margin-bottom:15px;
+            }
+
+            .validation-messages span {
+                font-size:0.8em;
+                background-color:#eee;
+                padding:6px;
+                border:1px solid #ccc;
+                border-radius:10px;
+                color:#666;
+            }
+
+            .hide {
+                display:none;
+            }
+    </style>
+    </head>
+    <body>
+        <article>
+            <h1>Forms<span> - validation messages</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <form id="change-email-form" name="change-email-form">
+                <fieldset>
+                    <h4>Change Email Address</h4>
+
+                    <label>Username:</label>
+                    <input type="text" name="username" 
+                            id="username" pattern="[a-zA-Z ]{5,}" 
+                            maxlength="30" required />
+                    <div class="validation-messages">
+                        <span data-rule="valueMissing" 
+                            class="hide">The username is required.</span>
+                        <span data-rule="patternMismatch" 
+                            class="hide">Must be a series of alpha 
+                                characters only (min 5, max 30).</span>
+                    </div>
+
+                    <label>Email:</label>
+                    <input type="email" name="email" id="email" 
+                        title="Email address is required" required />
+                    <div class="validation-messages">
+                        <span data-rule="valueMissing" class="hide">
+                            An email address is required.</span>
+                        <span data-rule="typeMismatch" class="hide">
+                            Special characters are not allowed.</span>
+                    </div>
+
+                    <hr />
+
+                    <button type="submit" id="submit" 
+                            name="submit" class="btn">Change</button>
+
+                    <button type="button" id="checkValidation" 
+                        name="checkValidation" 
+                        class="btn">Validate</button>
+                </fieldset>
+            </form>
+        </div>
+        
+        <script data-step="1" data-label="Custom Error Messages">
+            var step1 = function() {
+                //---
+                // Create a container for validation rule names.
+                var ruleNames = [];
+
+                // Fills array with rule names.
+                // Looks for all elements with 'vmsg' class 
+                // and then adds the first class (rule 
+                // name) to the array.
+                $("[data-rule]").each(function(i, element) {
+                  var ruleName = element.getAttribute('data-rule');
+                  if ($.inArray(ruleName, ruleNames) < 0) {
+                      ruleNames.push(ruleName);
+                  }
+                });
+
+                var
+                    // First clear the UI by hiding all validation 
+                    // messages. Then run validation rules on the 
+                    // selected form.
+                    validate = function() {
+                      $(".validation-messages span")
+                          .addClass('hide');
+
+                      document.getElementById('change-email-form')
+                          .checkValidity();
+                    },
+
+                    // Check each input element to determine which 
+                    // element is invalid. Once an invalid state 
+                    // is detected, then loop through the 
+                    // validation rules to find out which is 
+                    // broken and therefore which message to 
+                    // display to the user.
+                    validationFail = function(e) {
+                        var
+                            element = e.srcElement,
+                            validity = element.validity;
+
+                        if (!validity.valid) {
+                            ruleNames.forEach(function(ruleName) {
+
+                                checkRule(validity,
+                                          ruleName,
+                                          element);
+                            });
+
+                            e.preventDefault();
+                        }
+                    },
+
+                    // Uses the instance of the input element's
+                    // ValidityState object to run a validation 
+                    // rule. If the validation rule returns 
+                    // 'true' then the rule is broken and 
+                    // the appropriate validation message is 
+                    // exposed to the user. 
+                    checkRule = function(state, ruleName, ele) {
+                        if (state[ruleName]) {
+                            $(ele).next()
+                                .find('[data-rule="'
+                                    + ruleName + '"]')
+                                .removeClass('hide');
+                        }
+                    };
+
+                // Attaches validation event handlers to all input 
+                // elements that are NOT buttons.
+                $(':input:not(:button)').each(function() {
+                    this.oninvalid = validationFail;
+                    this.onblur = validate;
+                });
+
+                $('#checkValidation').click(validate);
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep: 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

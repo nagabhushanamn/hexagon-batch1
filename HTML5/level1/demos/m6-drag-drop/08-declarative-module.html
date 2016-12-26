@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Drag &amp; Drop: Module</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <style>
+            [draggable="true"] {
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+
+                /* Support old versions of WebKit */
+                -khtml-user-drag: element;
+                -webkit-user-drag: element;
+            }
+
+            div[draggable="true"], [data-role="draggable"] {
+                cursor:move;
+            }
+
+            .over {
+                background-color:#fff;
+                border:1px dashed #999;
+            }
+
+            .drag {
+                opacity:0.25;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Drag &amp; Drop Module</h1>
+
+            <div>
+                <div 
+                    class="well" 
+                    data-dnd-role="dropzone" 
+                    data-dnd-dropeffect="link">
+                    <h4>Drop Here: <span id="count">0</span> (effect: link)</h4>
+                </div>
+
+                <div 
+                    class="well" 
+                    data-dnd-role="dropzone" 
+                    data-dnd-dropeffect="move">
+                    <h4>Drop Here: <span id="count">0</span> (effect: move)</h4>
+                </div>
+
+                <div 
+                    class="well"
+                    data-dnd-role="draggable"
+                    data-dnd-effectallowed="copy">
+                    <h4>Allowed Effect: copy</h4>
+                </div>
+
+                <div
+                    class="well" 
+                    data-dnd-role="draggable"
+                    data-dnd-effectallowed="linkMove">
+                    <h4>Allowed Effect: linkMove</h4>
+                </div>
+
+            </div>
+        </article>
+        <footer><a href="http://pluralsight.com/courses/html5-fundamentals" target="_blank">HTML5 Fundamentals, Second Edition</a> by <a href="http://twitter.com/craigshoemaker" target="_blank"><img src="/src/img/craig-shoemaker-logo.png" /></a></footer>
+        
+        <script src="../js/jquery.js"></script>
+        <script src="drag-drop.js"></script>
+        <script>
+            $(function() {
+                dragDrop.setCSSClassNames('over', 'drag');
+
+                var dropped = function(e) {
+                    var
+                        countElement = $(this.querySelector('#count')),
+                        count = countElement.text();
+
+                    count++;
+
+                    countElement.text(count);
+                };
+
+                $('[data-dnd-role="dropzone"]').each(function(index, dropZone) {
+                    dropZone.addEventListener('drop', dropped, false);
+                });
+
+                $('article').fadeIn();
+            });
+        </script>
+    </body>
+</html>

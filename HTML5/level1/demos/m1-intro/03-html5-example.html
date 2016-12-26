@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="UTF-8">
+        <title>jQuery Secrets with Dave Ward - Polymorphic Podcast</title>
+        <link rel="Stylesheet" href="Tags.css" type="text/css" />
+        <style>
+            body {
+                margin:0px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <header>
+                <a href="http://polymorphicpodcast.com/">
+                    <h1>Polymorphic Podcast</h1>
+                    <h2>The show about object oriented development, architecture and best practices in .NET.</h2>
+                </a>
+                <nav>
+                    <ul> 
+                        <li><a href="http://polymorphicpodcast.com/">Home</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/shows/">Shows</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/blog/">Blog</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/about/">About</a></li>  
+                        <li><a href="http://polymorphicpodcast.com/contact/">Contact</a></li> 
+                    </ul>  
+                </nav>
+            </header>
+
+            <article>
+                <h1>jQuery Secrets with Dave Ward</h1>
+                <p id="introduction"><a href="http://encosia.com/">Dave Ward</a> (<a href="http://twitter.com/encosia">@encosia</a>)specializes 
+                in writing about ASP.NET, jQuery and ASP.NET AJAX. He is a contributing author to ASP.NET 
+                Ajax in Action, Second Edition from Manning, <a href="http://nerddinner.com/">Nerd Dinner</a>'s 
+                JavaScript secret weapon, listed on the <a href="http://programming.alltop.com/">Programming homepage 
+                of Alltop</a> and newly inducted <a href="http://aspinsiders.com/">ASP Insider</a>.</p>
+
+                <div id="players">
+                    <div class="container">
+                        <div class="label">Full Speed:</div>
+                        <div class="player">
+                            <audio controls src="http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery.mp3">
+                                <source />
+                                <source />
+                                <source />
+                                <object type="application/x-shockwave-flash" data="http://polymorphicpodcast.com/plugins/audio-player/player.swf" width="290" height="24" id="Object1">
+                                    <param name="movie" value="http://polymorphicpodcast.com/plugins/audio-player/player.swf" />
+                                    <param name="FlashVars" value="playerID=1&amp;bg=0xE9E6DF&amp;leftbg=0xEEEEEE&amp;lefticon=0x666666&amp;rightbg=0xCCCCCC&amp;rightbghover=0x999999&amp;righticon=0x666666&amp;righticonhover=0xFFFFFF&amp;text=0x666666&amp;slider=0x666666&amp;track=0xFFFFFF&amp;border=0x666666&amp;loader=0xCCCCCC&amp;soundFile=http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery.mp3" />
+                                    <param name="quality" value="high" />
+                                    <param name="wmode" value="transparent" />
+                                </object>
+                            </audio>
+                        </div>
+                        <div class="link"><a class="download" href="http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery.mp3" title="download">&darr;</a></div>
+                    </div>
+                    <div class="container">
+                        <div class="label">Fast Version:</div>
+                        <div class="player">
+                            <audio controls src="http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery_fast.mp3">
+                                <object type="application/x-shockwave-flash" data="http://polymorphicpodcast.com/plugins/audio-player/player.swf" width="290" height="24" id="audioplayer1">
+                                    <param name="movie" value="http://polymorphicpodcast.com/plugins/audio-player/player.swf" />
+                                    <param name="FlashVars" value="playerID=1&amp;bg=0xE9E6DF&amp;leftbg=0xEEEEEE&amp;lefticon=0x666666&amp;rightbg=0xCCCCCC&amp;rightbghover=0x999999&amp;righticon=0x666666&amp;righticonhover=0xFFFFFF&amp;text=0x666666&amp;slider=0x666666&amp;track=0xFFFFFF&amp;border=0x666666&amp;loader=0xCCCCCC&amp;soundFile=http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery_fast.mp3" />
+                                    <param name="quality" value="high" />
+                                    <param name="wmode" value="transparent" />
+                                </object>
+                            </audio>
+                        </div>
+                        <div class="link"><a class="download" href="http://polymorphicpodcast.com/podcast/files/PolymorphicPodcast-2009-06-19-jquery_fast.mp3" title="download">&darr;</a></div>
+                    </div>
+                </div>
+
+                <h2>What is jQuery?</h2>
+                <p>The <a href="http://jquery.com/">jQuery</a> movement is seemingly everywhere, but if you still remain curious what jQuery is, <a href="http://www.west-wind.com/weblog/">Rick Strahl</a> 
+                has an excellent introduction to library here: <a href="http://www.west-wind.com/presentations/jquery/">An Introduction to jQuery</a>.</p>
+                
+                <p>The <a href="http://en.wikipedia.org/wiki/Jquery">jQuery Wikipedia page</a> tells us that jQuery contains the following features:</p>
+
+                <blockquote>
+                    <ul>
+                    <li>DOM element selections using the cross-browser open source selector engine Sizzle, a spin-off out of jQuery project </li>
+                    <li>DOM traversal and modification (including support for CSS 1-3 and basic XPath) </li>
+                    <li>Events </li>
+                    <li>CSS manipulation </li>
+                    <li>Effects and animations </li>
+                    <li>Ajax </li>
+                    <li>Extensibility </li>
+                    <li>Utilities - such as browser version and the each function. </li>
+                    <li>JavaScript Plugins </li>
+                    </ul>
+                </blockquote>
+
+                <p><mark>One of jQuery's strengths includes giving you a reliable place to execute code when the page and it's elements are truly ready for processing and manipulation</mark>.
+                <a href="#jqueryReadyScript">Figure 1</a> demonstrates how you tap in the the ready event:</p>
+                <figure id="jqueryReadyScript">
+                <pre>
+$(function(){
+// select items, run load scripts, etc.
+});</pre>
+                <figcaption>Figure 1: jQuery Ready Event</figcaption>
+                </figure>
+
+                <h2>Dave's jQuery Tips for Web Developers</h2>
+                <ul>
+                    <li><h3>Learn the selectors - they are crucial!</h3>
+                    <ul>
+                        <li><a href="http://docs.jquery.com/Selectors/even">:even</a> and <a href="http://docs.jquery.com/Selectors/odd">:odd</a> - <a href="http://15daysofjquery.com/examples/zebra/">zebra striping is the classic example</a> </li>
+                        <li><a href="http://docs.jquery.com/Selectors/not">:not</a> - Powerful when using classes as flags. </li>
+                        <li><a href="http://docs.jquery.com/Selectors/text">:text</a> - Often overlooked. Easier/cleaner than 'input[type=text]'. </li>
+                        <li><a href="http://docs.jquery.com/Selectors/attributeEndsWith#attributevalue">attribute$=ID</a> - One way to overcome the ClientID issue.&#160; (<a href="http://encosia.com/2009/06/09/11-keystrokes-that-made-my-jquery-selector-run-10x-faster/">Be careful about performance</a>)</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Leverage <a href="http://www.mikeborozdin.com/post/CSS-Class-Names-Instead-of-ASPNET-Client-IDs.aspx">CSS classes instead of element IDs</a></h3>
+                    <ul>
+                        <li>Avoids the ClientID issue </li>
+                        <li>Good for selecting groups, like GridView rows.</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Look for plugins before reinventing the wheel</h3>
+                    <ul>
+                        <li><a href="http://jqueryui.com/">jQueryUI</a> covers the basics </li>
+                        <li><a href="http://plugins.jQuery.com">plugins.jQuery.com</a> for more </li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Conversely, be sure you need a plugin</h3>
+                    <ul>
+                        <li>Classic example is using an <a href="http://plugins.jquery.com/project/accordion">accordion</a> when <a href="http://docs.jquery.com/Effects/slideToggle">slideToggle</a> is all you really needed. </li>
+                        <li>Similarly, a lot of people don't realize they can use <a href="http://docs.jquery.com/Utilities/jQuery.each">$.each()</a></li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Don't be afraid to use fake CSS classes as &quot;flags&quot;</h3>
+                    <ul>
+                        <li>Blackjack game example: .card.flipped and .card:not(.flipped)</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Write Unobtrusive JavaScript</h3>
+                    <ul>
+                        <li>ASP.NET conditioned us to think <a href="http://www.w3schools.com/aspnet/prop_webcontrol_button_onclientclick.asp">OnClientClient</a> and <a href="http://www.4guysfromrolla.com/articles/021104-1.aspx">Attributes.Add</a> is proper, but wiring up <a href="http://docs.jquery.com/Events/bind">unobtrusive event handlers is much cleaner and more maintainable</a> 
+                        <ul>
+                            <li>$('#element').click() is the same as $addHandler($get('element'), 'click') in ASP.NET AJAX </li></ul>
+                        </li>
+                        <li><a href="http://www.ejball.com/EdAtWork/2005/03/28/JavaScriptAnonymousFunctions.aspx">Anonymous functions</a> are the norm in most jQuery code examples.&#160; Nothing to be scared of.&#160; More syntactical sugar than anything</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Use Firebug</h3>
+                    <ul>
+                        <li>The <a href="http://getfirebug.com/">Firebug</a> <a href="http://getfirebug.com/logging.html">inspect</a> and <a href="http://getfirebug.com/console.html">console</a> help you learn faster </li>
+                        <li><a href="http://blogs.msdn.com/ie/archive/2008/03/07/improved-productivity-through-internet-explorer-8-developer-tools.aspx">IE8's developer toolbar</a> works pretty well too</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Take advantage Bookmarklets</h3>
+                    <ul>
+                        <li><a href="http://www.learningjquery.com/2006/12/jquerify-bookmarklet">jQueryify</a> - inject jQuery into any page, for testing through Firebug </li>
+                        <li><a href="http://www.selectorgadget.com/">SelectorGadget</a> - Very helpful for learning selectors interactively</li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Minify and Combine your scripts</h3>
+                    <ul>
+                        <li>When using many plugins, you'll end up with the same "bloat" that is often associated with ASP.NET AJAX (due to the Toolkit, not the base library)</li>
+                        <li>Read <a href="http://encosia.com/2009/05/20/automatically-minify-and-combine-javascript-in-visual-studio/">Automatically minify and combine JavaScript in Visual Studio</a></li>
+                    </ul>
+                    </li>
+
+                    <li><h3>Boost Serving Time</h3> 
+                    <ul>
+                        <li>Use <a href="http://encosia.com/2008/12/10/3-reasons-why-you-should-let-google-host-jquery-for-you/"><u>the Google hosted version of jQuery</u></a> for public facing sites</li>
+                    </ul>
+                    </li>
+                    <li><h3>Take advantage of JavaScript IntelliSense</h3>
+                    <ul>
+                        <li>Get the <a href="http://docs.jquery.com/Downloading_jQuery#Download_jQuery">jQuery vsdoc file</a></li>
+                        <li>Read <a href="http://blogs.msdn.com/webdevtools/">Jeff King</a>'s great <a href="http://blogs.msdn.com/webdevtools/archive/2008/11/18/jscript-intellisense-faq.aspx">FAQ detailing how common issues when configuring JavaScript IntelliSense</a></li>
+                        <li>If all else fails, just add <a href="http://weblogs.asp.net/scottgu/archive/2007/06/21/vs-2008-javascript-intellisense.aspx">/// &lt;reference path=&quot;~/path/to/jquery-1.3.2.vsdoc&quot; /&gt; in a JS include</a></li>
+                    </ul>
+                    </li>
+                </ul>
+
+                <details open>
+                    <summary>Other Resources Mentioned in the Show</summary>
+                    <ul>
+                        <li><a href="http://aspnet.codeplex.com/Wiki/View.aspx?title=AJAX">New Features in ASP.NET 4 AJAX</a> </li>
+                        <li><a href="http://encosia.com/2007/07/11/why-aspnet-ajax-updatepanels-are-dangerous/">Why ASP.NET AJAX UpdatePanels are dangerous</a> </li>
+                        <li><a href="http://weblogs.asp.net/craigshoemaker/archive/2008/12/02/controlling-html-in-asp-net-webforms.aspx">Controlling HTML in ASP.NET WebForms</a> </li>
+                        <li><a href="http://www.javascripttoolbox.com/jquery/cheatsheet/">jQuery 1.3.2 Cheat Sheet</a> </li>
+                        <li><a href="http://www.cygen.com/dotnetiq/">dotnetIQ: Learn .NET on your iPhone</a> </li>
+                        <li><a href="http://feeds2.feedburner.com/PolymorphicPodcastFastFeed">Polymorphic Podcast FastFeed</a> </li>
+                        <li><a href="http://www.jsmag.com/">JsMag</a> is offering a discount (listen to the show for the coupon code!) </li>
+                    </ul>
+                </details>
+
+                    
+                    
+            </article>
+
+            <aside id="extraLinks">
+                <h1>Make sure to check out Dave's blog!</h1>
+                <p>Like what you see here? Dave Ward has a wealth jQuery and ASP.NET related resources found at <a href="http://encosia.com/">encosia.com</a>.</p>
+            </aside>
+
+            <aside id="sponsor">
+                <h1>Hosted by ORCS Web</h1>
+                <p>The Polymorphic Podcast is proud to be supported by <a href="http://orcsweb.com/">ORCS Web</a>.</p>
+            </aside>
+
+            <footer>
+                <nav>
+                    <ul> 
+                        <li><a href="http://polymorphicpodcast.com/">Home</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/shows/">Shows</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/blog/">Blog</a></li> 
+                        <li><a href="http://polymorphicpodcast.com/about/">About</a></li>  
+                        <li><a href="http://polymorphicpodcast.com/contact/">Contact</a></li> 
+                    </ul>  
+                </nav>
+
+                <div>Published <time datetime="2009-06-19T13:25:23-8:00" pubdate>June 19, 2009</time></div>
+                <div>All Rights Reserved &copy; Craig Shoemaker 2005 - 2013</div>
+            </footer>
+        </main>
+        <script type="text/javascript" src="/src/jquery.js" />
+        <script>
+            $(function() {
+                // do something here
+            });
+        </script>
+    </body>
+</html>

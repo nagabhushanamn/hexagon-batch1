@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Selection: Features</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            #result div {
+                border:1px solid #ccc;
+                border-radius:4px;
+                padding:4px;
+                margin:4px;
+            }
+
+                #result div:hover {
+                    background-color:#eee;
+                }
+
+            .odd {
+                background-color:#ffc;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Selection <span>- features</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <div id="log">&nbsp;</div>
+            <hr />
+            <div class="item" id="div1">div 1</div>
+            <div class="item" id="div2">div 2</div>
+            <div class="item" id="div3">div 3</div>
+            <div class="item" id="div4">div 4</div>
+            <div class="item" id="div5">div 5</div>
+            <div class="item" id="div6">div 6</div>
+
+        </div>
+        
+        <script data-step="1" data-label="CSS3 Selectors">
+            var step1 = function() {
+                //---
+                var
+                    resultWindow = document.getElementById('result'),
+                    log = document.querySelector('#log');
+
+                var
+                    odd = resultWindow
+                            .querySelectorAll('div:nth-child(even)');
+
+                for (var i = 0, len = odd.length; i < len; i++) {
+                    odd[i].className = 'odd';
+                }
+
+                log.innerText = 'Assign CSS class to all even DIVs.';
+                //---
+            }
+        </script>
+        <script data-step="2" data-label="Return Type">
+            var step2 = function() {
+                //---
+                var
+                    result = '',
+                    log = document.querySelector('#log'),
+                    
+                    getType = function (obj) {
+                        if (obj === null) {
+                            return '[object Null]';
+                        }
+
+                        return Object.prototype.toString.call(obj);
+                    };
+
+                var
+                    divs = document
+                        .querySelectorAll('div [id*="div"]');
+
+                result = 'querySelectorAll returns: '
+                result += getType(divs);
+
+                log.innerText = result;
+                //---
+            }
+        </script>
+        <script data-step="3" data-label="Iterating">
+            var step3 = function() {
+                //---
+                // NodeList is not an Array
+
+                var
+                    log = document.querySelector('#log'),
+                    forEach = Array.prototype.forEach;
+
+                var
+                    divs = document
+                        .querySelectorAll('div [id*="div"]');
+
+                forEach.call(divs, function(div) {
+                    div.innerText += ': forEach';
+                });
+
+                for (var i = 0, len = divs.length; i < len; i++) {
+                    divs[i].innerText += ' | for loop';
+                }
+                //---
+            }
+        </script>
+        <script data-step="4" data-label="'Live' Result">
+            var step4 = function() {
+                //---
+                // 'live' results with getElementsByClassName
+
+                var
+                    items = document
+                                .getElementsByClassName('item'),
+
+                    result = document
+                                .getElementById('result'),
+
+                    log = function(msg) {
+                        document.getElementById('log')
+                                .innerHTML += msg + '<br>';
+                    };
+
+                log('Original length: ' + items.length);
+
+                var newItem = document.createElement('DIV');
+                newItem.className = 'item';
+                newItem.innerText = 'new div';
+                result.appendChild(newItem);
+
+                log('After new element: ' + items.length);
+                //---
+            }
+        </script>
+        <script data-step="5" data-label="'Static' Result">
+            var step5 = function() {
+                //---
+                // 'static' results with querySelectorAll
+
+                var
+                    items = document
+                                .querySelectorAll('.item'),
+
+                    result = document
+                                .getElementById('result'),
+
+                    log = function(msg) {
+                        document.getElementById('log')
+                                .innerHTML += msg + '<br>';
+                    };
+
+                log('Original length: ' + items.length);
+
+                var newItem = document.createElement('DIV');
+                newItem.className = 'item';
+                newItem.innerText = 'new div';
+                result.appendChild(newItem);
+
+                log('After new element: ' + items.length);
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                step1: step1,
+                step2: step2,
+                step3: step3,
+                step4: step4,
+                step5: step5
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

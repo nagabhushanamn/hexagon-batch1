@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Selection: Basics</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            #result div {
+                border:1px solid #ccc;
+                border-radius:4px;
+                padding:4px;
+                margin:4px;
+            }
+
+                #result div:hover {
+                    background-color:#eee;
+                }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Selection <span>- basics</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <div id="log">&nbsp;</div>
+            <hr />
+            <div class="item" id="div1">div 1</div>
+            <div class="item" id="div2">div 2</div>
+            <div class="item" id="div3">div 3</div>
+            <div class="item" id="div4">div 4</div>
+            <div class="item" id="div5">div 5</div>
+            <div class="item" id="div6">div 6</div>
+
+        </div>
+        
+        <script data-step="1" data-label="getElementsByClassName">
+            var step1 = function() {
+                //---
+                var
+                    items = document.getElementsByClassName('item'),
+                    log = document.getElementById('log');
+
+                log.innerText = items.length + ' "item" elements';
+                //---
+            }
+        </script>
+        <script data-step="2" data-label="querySelector">
+            var step2 = function() {
+                //---
+                var log = document.querySelector('#log');
+
+                log.innerText =
+                    'Selected via document.querySelector';
+                //---
+            }
+        </script>
+        <script data-step="3" data-label="querySelectorAll">
+            var step3 = function() {
+                //---
+                var
+                    divs = document.querySelectorAll('div'),
+                    log = document.querySelector('#log');
+
+                log.innerText = 'There are ' +
+                    divs.length + ' DIVs on this page.';
+                //---
+            }
+        </script>
+        <script data-step="4" data-label="querySelectorAll (element)">
+            var step4 = function() {
+                //---
+                var
+                    result = document.getElementById('result'),
+                    divs = result.querySelectorAll('div'),
+                    log = result.querySelector('#log');
+
+                log.innerText = 'There are ' +
+                    divs.length + ' DIVs in DIV#result.';
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                step1: step1,
+                step2: step2,
+                step3: step3,
+                step4: step4
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

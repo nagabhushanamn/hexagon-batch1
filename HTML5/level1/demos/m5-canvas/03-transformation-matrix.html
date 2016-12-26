@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Canvas: Transformation Matrix</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <link href='../css/bootstrap.min.css' rel='stylesheet' media='screen'>
+        <link href='../css/global.css' rel='stylesheet' media='screen'>
+        <link href='../css/github-theme.css' rel='stylesheet' media='screen'>
+        <style>
+            #controls .row > .span4,
+            #controls .row > div > span {
+                font-size:0.8em;
+            }
+
+            input[type="range"] {
+                width:90%;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Canvas Manipulation<span> - transformation matrix</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+            <canvas id="canvas" width="250" height="55">
+                <img id="logo" src="../img/pluralsight-logo.png" 
+                    width="401" height="95" />
+            </canvas>
+
+
+            <div id="controls" class="push-down" style="margin-left:10px;">
+                <div class="row">
+                    <div class="span4">Horizontal Scale (m11)</div>
+                    <div class="span8">
+                        <input type="range" id="m11" value="1" min="0" step="0.1" max="10" />
+                        <span id="m11value">1</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">Rotate (m12)</div>
+                    <div class="span8">
+                        <input type="range" id="m12" value="0" min="-10" step="0.1" max="10" />
+                        <span id="m12value">0</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">Skew (m21)</div>
+                    <div class="span8">
+                        <input type="range" id="m21" value="0" min="-10" step="0.1" max="10" />
+                        <span id="m21value">0</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">Vertical Scale (m22)</div>
+                    <div class="span8">
+                        <input type="range" id="m22" value="1" min="0" step="0.1" max="10" />
+                        <span id="m22value">1</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">Horizontal Pan (dx)</div>
+                    <div class="span8">
+                        <input type="range" id="dx" value="0" min="-400" step="1" max="400" />
+                        <span id="dxvalue">0</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">Vertical Pan (dy)</div>
+                    <div class="span8">
+                        <input type="range" id="dy" value="0" min="-95" step="1" max="95" />
+                        <span id="dyvalue">0</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">&nbsp;</div>
+                    <div class="span8">
+                        <button type="button" class="btn btn-mini" id="reset">Reset</button>
+                    </div>
+                </div>
+                <h4>Source</h4>
+                <input type="text" id="source" style="width:90%;" />
+            </div>
+        </div>
+        
+        <script data-step="1" data-label="Transformation Matrix">
+            var step1 = function() {
+                //---
+                var
+                    logo, canvas, context,
+                    width = 250,
+                    height = 55,
+
+                    _m11 = $('#m11'),   // horizontal scale
+                    _m12 = $('#m12'),   // rotation
+                    _m21 = $('#m21'),   // skew
+                    _m22 = $('#m22'),   // vertical scale
+                    _dx = $('#dx'),     // horizontal pan
+                    _dy = $('#dy'),     // vertical pan
+
+                    logo = document.getElementById('logo'),
+
+                    valueChange = function() {
+
+                        var
+                            m11 = roundNumber(_m11.val()),
+                            m12 = roundNumber(_m12.val()),
+                            m21 = roundNumber(_m21.val()),
+                            m22 = roundNumber(_m22.val()),
+                            dx = parseInt(_dx.val()),
+                            dy = parseInt(_dy.val());
+
+                        var selector = 'input[type="range"]';
+
+                        $(selector).each(function(index) {
+
+                            $('#' + this.id + 'value')
+                                .text($('#' + this.id).val());
+                        });
+
+                        context.clearRect(0, 0, width, height);
+
+                        context.setTransform(m11, // a : horiz scale
+                                             m12, // b : rotation
+                                             m21, // c : skew
+                                             m22, // d : vert. scale
+                                             dx,  // e : horiz. pan
+                                             dy); // f : vert. pan
+
+                        context.drawImage(logo, 0, 0);
+
+                        $('#source').val('context.setTransform(' +
+                                          m11 + ',' +
+                                          m12 + ',' +
+                                          m21 + ',' +
+                                          m22 + ',' +
+                                          dx + ',' +
+                                          dy + ');')
+                                    .click(function() {
+                                        this.select();
+                                    });
+                    },
+                    
+                    roundNumber = function(value) {
+                        var
+                            num = parseFloat(value),
+                            result = Math.round(num * 100) / 100;
+
+                        return result;
+                    };
+
+                if (Modernizr.canvas) {
+
+                    canvas = document.getElementById('canvas');
+
+                    context = canvas.getContext('2d');
+
+                    logo.onload = function() {
+                        context.drawImage(logo, 0, 0);
+                    };
+
+                    $('input[type="range"]').each(function(index) {
+                        this.onchange = valueChange;
+                    });
+
+                    $('#reset').click(function() {
+                        _m11.val(1);
+                        _m12.val(0);
+                        _m21.val(0);
+                        _m22.val(1);
+                        _dx.val(0);
+                        _dy.val(0);
+                        valueChange();
+                    });
+                } else {
+                    $('#controls').hide();
+                }
+
+                valueChange();
+                //---
+            }
+        </script>
+        
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep: 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

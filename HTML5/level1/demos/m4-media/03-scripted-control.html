@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Media: Scripted Control</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            #playPause {
+                width:75px;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Media<span> - scripted control</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+
+
+
+
+            <video id="vid" poster="../img/bbb.png" width="320">
+                <source src="../media/big_buck_bunny.mp4" type="video/mp4" />
+                <source src="../media/big_buck_bunny.ogv" type="video/ogg" />
+                <source src="../media/big_buck_bunny.webm" type="video/webm" />
+            </video>
+            <div>
+                <input type="range" 
+                       id="scrubber" 
+                       min="0" max="60"
+                       value="0" step="1"  />
+
+                <span id="remainingTime">0:00</span> / 
+                <span id="totalTime">0:00</span>
+            </div>
+            <div>
+                <button class="btn" id="playPause">Play</button>
+                <button class="btn" id="stop">Stop</button>
+                <button class="btn" id="begin">&lt;&lt;</button>
+                <button class="btn" id="rewind">&lt;</button>
+                <button class="btn" id="fastForward">&gt;</button>
+                <button class="btn" id="end">&gt;&gt;</button>
+            </div>
+            <div>
+                <input type="range" id="volume" min="0" step="0.1" max="1" />
+                <button class="btn" id="mute">Mute</button>
+            </div>
+            <div>
+                Speed <input type="range" 
+                             id="playbackRate" 
+                             min="1" value="1" 
+                             step="1" max="4" />
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+        <script data-step="1" data-label="Native Support">
+            var step1 = function() {
+                //---
+                var
+                    video = document.querySelector('#vid'),
+                    remainingTime = $('#remainingTime'),
+                    totalTime = $('#totalTime'),
+                    playPause = $('#playPause'),
+                    stop = $('#stop'),
+                    rewind = $('#rewind'),
+                    begin = $('#begin'),
+                    end = $('#end'),
+                    fastForward = $('#fastForward'),
+                    volume = $('#volume'),
+                    mute = $('#mute'),
+                    scrubber = $('#scrubber'),
+                    playbackRate = $('#playbackRate'),
+
+                    TIME_STEP = 5,
+
+                    formatTime = function(seconds) {
+                        seconds = Math.round(seconds);
+                        var minutes = 0;
+                        if (seconds >= 60) {
+                            minutes = Math.floor(seconds / 60);
+                            seconds = (seconds - (minutes * 60));
+                        }
+
+                        seconds = seconds + '';
+                        if (seconds.length == 1) {
+                            seconds = '0' + seconds;
+                        }
+
+                        return minutes + ':' + seconds;
+                    };
+
+                playPause.click(function() {
+                    if (video.paused || video.ended) {
+                        video.play();
+                        playPause.text('Pause');
+                    }
+                    else {
+                        video.pause();
+                        playPause.text('Play');
+                    }
+                });
+
+                stop.click(function() {
+                    video.pause();
+                    video.currentTime = 0;
+                    playPause.text('Play');
+                    video.playbackRate = 1;
+                    playbackRate.val(1);
+                });
+
+                begin.click(function() {
+                    video.currentTime = 0;
+                });
+
+                rewind.click(function() {
+                    video.currentTime -= TIME_STEP;
+                });
+
+                fastForward.click(function() {
+                    video.currentTime += TIME_STEP;
+                });
+
+                end.click(function() {
+                    video.currentTime = video.duration;
+                    playPause.text('Play');
+                });
+
+                volume.change(function() {
+                    video.volume = this.value;
+                });
+
+                var vol = 0;
+
+                mute.click(function() {
+
+                    if (!video.muted) {
+                        vol = volume.val();
+                    }
+
+                    video.muted = !video.muted;
+
+                    if (!video.muted) {
+                        volume.val(vol);
+                        mute.text('Mute');
+                    }
+                    else {
+                        volume.val(0);
+                        mute.text('Unmute');
+                    }
+                });
+
+                scrubber.change(function() {
+                    video.currentTime = this.value;
+                });
+
+                playbackRate.change(function() {
+                    video.playbackRate = this.value;
+                });
+
+
+                video.addEventListener('play', function() {
+                    totalTime.text(formatTime(video.duration));
+                });
+
+                video.addEventListener('timeupdate', function() {
+
+                    remainingTime.text(
+                        formatTime(video.currentTime));
+
+                    scrubber.val(video.currentTime);
+                });
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

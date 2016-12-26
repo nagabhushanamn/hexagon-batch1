@@ -1,0 +1,274 @@
+﻿body
+{
+    font-family:Arial, Helvetica, sans-serif;
+    background-color:#ccc;
+}
+
+a {color:#900;font-weight:bold;}
+a:visited {color:#900}
+a:hover {color:#933;}
+
+body>main
+{   
+    margin:auto;
+    width:70%;
+}
+
+header
+{
+    width:375px;
+    margin-top:20px;
+    margin-left:-80px;
+    background-color:#fff;
+    padding:10px;
+    -moz-border-radius-topright:15px;
+    border-top-right-radius:15px;
+    -moz-border-radius-bottomleft:15px;
+    border-bottom-left-radius:15px;
+}
+
+header a
+{
+    text-decoration:none;
+}
+
+header h1
+{
+    margin-top:0px;
+    margin-left:13px;
+    margin-bottom:2px;
+    text-indent:-1000px;
+    background-image:url(../img/lgoPolymorphicPodcast.gif);
+    background-repeat:no-repeat;
+    width:337px;
+    height:47px;
+}
+
+header h2
+{
+    display:none;
+}
+
+header nav
+{
+    margin-top:-10px;
+}
+
+nav ul
+{
+    list-style:none;
+}
+
+nav ul li
+{
+    display:inline;
+}
+
+header nav ul li a
+{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:.8em;
+    background-color:#f93;
+    padding:4px;
+    margin:4px;
+    font-weight:bold;
+    color:#fff;
+    -moz-border-radius:5px;
+    border-radius:5px;
+}
+
+header nav ul li a:visited
+{
+    color:#fff;
+}
+
+header nav ul li a:hover
+{
+    color:#900;
+}
+
+article, article h1, footer, aside
+{
+    -moz-border-radius-topright:30px;
+    border-top-right-radius:30px;
+    -moz-border-radius-bottomleft:30px;
+    border-bottom-left-radius:30px;
+}
+
+article
+{
+    padding:20px;
+    margin-top:-45px;
+    padding-right:100px;
+    background-color:#fff;
+}
+
+article h1
+{
+    font-size:3em;
+    letter-spacing:-3px;
+    color:#333;
+    background-color:#eee;
+    width:90%;
+    padding:6px;
+    padding-left:40px;
+    border:none;
+}
+
+pre
+{
+    padding:4px;
+    background-color:#eee;
+    border:1px solid #ccc;
+    overflow:auto;
+}
+
+audio
+{
+    background-color:#eee;
+}
+
+mark
+{
+    background-color:#ffc;
+}
+
+footer
+{
+    background-color:#666666;
+    margin-bottom:20px;
+    color:#fff;
+    padding:10px;
+    border:none;
+    margin-top:20px;
+}
+
+footer a
+{
+    font-weight:bold;
+}
+
+footer nav ul
+{
+    text-align:right;
+}
+
+footer nav ul li a
+{
+    text-decoration:none;
+    color:#fff;
+    margin:6px;
+}
+
+footer nav ul li a:visited
+{
+    color:#fff;
+}
+
+footer div {
+    margin-left:10px;
+    font-size:.8em;
+    color:#eee;
+}
+
+aside
+{
+    position:absolute;
+    right:10%;
+    width:115px;
+    padding:4px;
+    background-color:#eee;
+    border-left:3px solid #ccc;
+    border-bottom:3px solid #ccc;
+}
+
+aside h1
+{
+    font-size:1em;
+}
+
+blockquote
+{
+    font-style:italic;
+}
+
+figcaption
+{
+    font-weight:bold;
+    margin-left:25px;
+    font-size:.8em;
+}
+
+.download
+{
+    padding:6px;
+    border:1px solid #ccc;
+    text-decoration:none;
+    color:#333;
+}
+
+.download:hover
+{
+    background-color:#eee;
+}
+
+.alt
+{
+    background-color:#eee;
+}
+
+#players
+{
+    clear:both;
+}
+
+#players .container
+{
+    clear:both;
+    margin-top:15px;
+}
+
+#players .container .label
+{
+    float:left;
+    width:110px;
+    padding-top:5px;
+}
+
+#players .container .player
+{
+    float:left;
+    width:310px;
+}
+
+#players .container .link
+{
+    padding-top:5px;
+}
+
+#introduction
+{
+    font-size:1.6em;
+    font-family:Arial;
+    font-style:italic;
+    width:80%;
+    color:#666;
+    padding-bottom:25px;
+    margin-left:65px;
+    margin-bottom:20px;
+    line-height:1.8em;
+    letter-spacing:-2px;
+    background-color:#eee;
+    border:1px solid #ccc;
+    padding:15px;
+}
+
+#extraLinks
+{
+    top:700px;
+}
+
+#sponsor
+{
+   top:1200px;
+}

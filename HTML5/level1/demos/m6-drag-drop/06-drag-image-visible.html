@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Drag &amp; Drop: Drop Effects</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            [draggable="true"] {
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
+
+                /* Support old versions of WebKit */
+                -khtml-user-drag: element;
+                -webkit-user-drag: element;
+            }
+
+            div[draggable="true"] {
+                cursor:move;
+            }
+
+            .over {
+                background-color:#fff;
+                border:1px dashed #999;
+            }
+
+            #drag-image {
+                 background: url(../img/arrow-up.png) no-repeat -9999px -9999px; }
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <h1>Drag &amp; Drop<span> - drop effects</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+            <img id="drag-image" src="../img/arrow-up.png" />
+            <div id="target" class="well">
+                <h4>Drop Here</h4>
+            </div>
+
+            <div id="source" draggable="true" class="well">
+                <h4>Drag Me</h4>
+            </div>
+
+
+
+        </div>
+
+        <script data-step="1" data-label="Visible DOM Image">
+            var step1 = function() {
+                //---
+                var
+                    cancel = function(e) {
+                        if (e.preventDefault) {
+                            e.preventDefault();
+                        }
+
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                        }
+
+                        return false;
+                    },
+
+                    dragStart = function(e) {
+
+                        var img =
+                            document.getElementById('drag-image');
+
+                        e.dataTransfer.setDragImage(img, -15, 15);
+
+                        try {
+
+                            e.dataTransfer
+                                .setData('text/plain', '');
+
+                        } catch (e) {
+
+                            e.dataTransfer
+                                .setData('Text', '');
+                        }
+                    };
+
+                var target = document.querySelector('#target');
+
+                target.addEventListener('drop',
+                                         cancel, false);
+
+                target.addEventListener('dragenter',
+                                         cancel, false);
+
+                target.addEventListener('dragover',
+                                         cancel, false);
+
+
+                var source = document.querySelector('#source');
+                source.addEventListener('dragstart',
+                                         dragStart, false);
+                //---
+            }
+        </script>
+
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                currentStep: 0,
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

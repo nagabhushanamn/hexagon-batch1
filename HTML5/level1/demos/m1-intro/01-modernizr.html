@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <title>Detecting HTML5 Featuers with Modernizr</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <article>
+            <h1>Detecting HTML5 Features with Modernizr</h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <span id="msg"></span>
+        </div>
+        
+        <script data-step="1" data-label="Using Modernizr">
+            var step1 = function() {
+                //---
+                if (Modernizr.canvas) {
+                    $('#msg').text('The canvas API is supported in this browser.');
+                }
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep: 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

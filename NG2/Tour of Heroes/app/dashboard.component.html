@@ -1,0 +1,8 @@
+<h3 class="page-header">Top Heroes</h3>
+<div class="list-group">
+    <div *ngFor="let hero of heroes" [routerLink]="['/detail', hero.id]" class="">
+        <div class="list-group-item list-group-item-success">
+            <p>{{hero.name}}</p>
+        </div>
+    </div>
+</div>

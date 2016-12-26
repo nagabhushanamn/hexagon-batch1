@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Forms: Validation Pseudo Classes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+
+            input:valid + .invalid /* Adjacent sibling selector */ {
+                visibility: hidden;
+            }
+
+            input:invalid + .invalid {
+                visibility: visible;
+            }
+
+            input:required {
+                border: 2px solid #900;
+            }
+
+            input:valid {
+                border: 2px solid #ccc;
+            }
+
+            .invalid {
+                margin-top:0px;
+                margin-bottom:4px;
+                font-size:0.8em;
+                color: #666;
+
+            }
+    </style>
+    </head>
+    <body>
+        <article>
+            <h1>Forms<span> - validation pseudo classes</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+            <form id="changeEmailForm">
+                <fieldset>
+                    <h4>Change Email Address</h4>
+
+                    <input type="text" 
+                            id="username" name="username" 
+                            pattern="[a-zA-Z ]{5,}"
+                            placeholder="Username"
+                            maxlength="30" required />
+                    <div class="invalid">
+                        The required user name may only be a series 
+                        of alphabetical characters.
+                    </div>
+
+                    <input type="email" 
+                            id="email" name="email" 
+                            placeholder="Email" required />
+                    <div class="invalid">
+                        The required email address may not include any special 
+                        characters other than the '@' sign.
+                    </div>
+
+                    <button type="submit" 
+                        id="submit" name="submit" class="btn">Change</button>
+                </fieldset>
+            </form>
+        </div>
+        
+        <script data-step="1" data-label="Validation Pseudo Classes">
+            var step1 = function() {
+                //---
+                // This sample requires no JavaScript. 
+                // All interaction is via the native 
+                // browser forms validation API in
+                // concert with CSS pseudo classes.
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep: 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>

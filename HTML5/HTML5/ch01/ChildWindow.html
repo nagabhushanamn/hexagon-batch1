@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Child</title>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+	<script>
+
+		// Handles messages sent from main window.
+		function onMessage(e) {
+			// Check who sent me this message.
+			if (e.origin == "http://127.0.0.1:8080") {		
+				document.getElementById("balance").innerHTML = e.data;
+			} else {
+				alert("Child window rejecting message from " + e.origin);
+			}
+		}
+
+		// Posts a message back to main window, to levy a fee of 10 on the account.
+		function levyFee() {
+			window.opener.postMessage(10, "*");
+		}
+
+		// Set up a handler for messages sent from the main window.
+		window.addEventListener("message", onMessage, true);
+
+	</script>
+
+</head>
+<body>
+
+	<div class="container">
+	
+		<div class="page-header">cross domain Messaging API</div>
+		
+		<div class="well">
+			Current balance: <span id="balance" class="badge">Unspecified</span>
+		</div>
+
+		<button onclick="levyFee()">Levy fee</button>
+		
+			
+	</div>
+
+</body>
+</html>

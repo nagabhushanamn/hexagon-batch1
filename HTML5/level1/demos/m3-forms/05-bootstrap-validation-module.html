@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" type="image/png" href="/src/favicon.png">
+        <meta charset="utf-8" />
+        <title>Forms: Bootstrap Validation Module</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="../css/global.css" rel="stylesheet" media="screen">
+        <link href="../css/github-theme.css" rel="stylesheet" media="screen">
+        <style>
+            input:valid {
+                background: #fff;
+            }
+
+            input:invalid {
+                background: #fcc;
+                color: #333;
+            }
+    </style>
+    </head>
+    <body>
+        <article>
+            <h1>Forms<span> - bootstrap validation module</span></h1>
+        </article>
+        <div id="result-stub" class="well hidden">
+
+
+
+            <form id="email-form">
+                <input type="text" 
+                    id="username" name="username" 
+                    pattern="[a-zA-Z ]{5,}"
+                    placeholder="Username" 
+                    maxlength="30"
+                    required
+                    data-role="validate"
+                    title="Username"
+                    data-content="The username is required. The username 
+                    must be a series of alpha-numeric characters only." /><br />
+
+                <input type="email" 
+                    id="email" name="email" 
+                    data-role="validate"
+                    placeholder="Email" required
+                    title="Email"
+                    data-content="The email address is required." /><br />
+
+                <button type="button" 
+                    class="btn" 
+                    data-role="trigger-validation">Validate</button>
+            </form>
+            <div id="msg"></div>
+
+
+
+
+
+
+        </div>
+        
+        <script data-step="1" data-label="Bootstrap Validation Module">
+            var step1 = function() {
+                //---
+                var ValidationUtility = function() {
+                    var
+                      elements = $('[data-role="validate"]'),
+                      elementCount = 0;
+
+                    elements.popover({
+                        placement: 'top'
+                    });
+
+                    elements.on('invalid', function() {
+                        if (elementCount === 0) {
+                            $('#' + this.id).popover('show');
+                            elementCount++;
+                        }
+                    });
+
+                    elements.on('blur', function() {
+                        $(this).popover('hide');
+                    });
+
+                    var validate = function(formSelector) {
+                        elementCount = 0;
+
+                        if (formSelector.indexOf('#') === -1) {
+                            formSelector = '#' + formSelector;
+                        }
+
+                        return $(formSelector)[0].checkValidity();
+                    };
+
+                    return {
+                        validate: validate
+                    };
+                };
+
+                var
+                    validator = new ValidationUtility(),
+                    selector = '[data-role="trigger-validation"]';
+
+                $(selector).click(function() {
+
+                    if (validator.validate('email-form')) {
+                        $('#msg').text('Valid');
+                    }
+                    else {
+                        $('#msg').text('Invalid');
+                    }
+                });
+                //---
+            }
+        </script>
+        <script data-label="Command Object Mapping">
+            var _commands = {
+                executeOnLoad: true,
+                hideCommandButtons: true,
+                currentStep: 0,
+                step1: step1
+            };
+        </script>
+        <script data-main="../js/main" src="../js/require-jquery.js"></script>
+    </body>
+</html>
