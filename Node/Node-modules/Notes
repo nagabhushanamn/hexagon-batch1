@@ -1,0 +1,17 @@
+
+
+Node.js uses 'commonJS' as a module-standard.
+
+
+commonJS
+-------------
+
+--> every .js is a module.
+--> all var/functions are private members to that .js file by default
+--> to abstract/export any member(s), use 'module.exports'
+--> to import/require other module, use 'require('mid')'
+
+
+//-------------------------------------------------------------
+
+

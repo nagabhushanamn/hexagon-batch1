@@ -1,0 +1,11 @@
+{
+  "name": "nag-greet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "nag@gmail.com",
+  "license": "ISC"
+}

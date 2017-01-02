@@ -5,7 +5,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	selector: 'product',
 	templateUrl: 'product.component.html'
 })
-
 export class ProductComponent {
 
 	@Output()
