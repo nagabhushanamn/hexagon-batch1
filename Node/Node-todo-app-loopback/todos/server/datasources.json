@@ -1,0 +1,11 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongods": {
+    "url": "mongodb://hex:hex@ds151108.mlab.com:51108/hex-todos",
+    "name": "mongods",
+    "connector": "mongodb"
+  }
+}
