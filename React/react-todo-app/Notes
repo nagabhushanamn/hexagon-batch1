@@ -1,0 +1,39 @@
+
+
+Thinking in React  - Todo-App
+
+step-1: Break The UI Into A Component Hierarchy
+
+App
+    - Header
+        - TodoTextInput
+    - MainSection
+        - TodoItem(s)
+    - Footer
+
+
+step-2 : Build A Static Version in React    
+
+Step 3: Identify The Minimal (but complete) Representation Of UI State
+
+    a.Is it passed in from a parent via props? If so, it probably isn't state.
+    b.Does it remain unchanged over time? If so, it probably isn't state.
+    c.Can you compute it based on any other state or props in your component? If so, it isn't state.
+
+
+    e.g
+
+    state ==> list of todos 
+
+
+Step 4: Identify Where Your State Should Live 
+
+        ref : https://facebook.github.io/react/docs/thinking-in-react.html
+
+
+     e.g for todo-app       
+
+       App ==> stateful
+
+
+

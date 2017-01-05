@@ -6,7 +6,7 @@ class NumbersFrame extends Component {
     render() {
 
         let numbers = [];
-        let {selectNumber, selectedNumbers, usedNumbers,doneStatus} = this.props;
+        let {selectNumber, selectedNumbers, usedNumbers,doneStatus,resetGame} = this.props;
 
         for (let i = 1; i < 10; i++) {
             let className = "number selected-" + (selectedNumbers.indexOf(i) > -1);
@@ -21,7 +21,7 @@ class NumbersFrame extends Component {
 
         if (doneStatus) {
             return (
-                <DoneStatus doneStatus={doneStatus}/>
+                <DoneStatus doneStatus={doneStatus} resetGame={resetGame}/>
             );
         } else {
             return (

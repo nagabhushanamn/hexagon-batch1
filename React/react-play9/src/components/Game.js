@@ -67,6 +67,17 @@ class Game extends Component {
         }
 
     }
+    resetGame() {
+        console.log('reset game...');
+        this.setState({
+            selectedNumbers: [],
+            usedNumbers: [],
+            numberOfStars: this.randomNumber(),
+            correct: null,
+            redraws: 5,
+            doneStatus: null
+        });
+    }
 
     possibleCombinationSum(arr, n) {
         if (arr.indexOf(n) >= 0) { return true; }
@@ -126,6 +137,7 @@ class Game extends Component {
                 <NumbersFrame selectedNumbers={this.state.selectedNumbers}
                     doneStatus={this.state.doneStatus}
                     usedNumbers={this.state.usedNumbers}
+                    resetGame={this.resetGame.bind(this)}
                     selectNumber={this.selectNumber.bind(this)} />
             </div>
         );
