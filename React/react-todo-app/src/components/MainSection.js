@@ -5,10 +5,16 @@ import TodoItem from './TodoItem';
 class MainSection extends Component {
     render() {
        
-        let {todos} = this.props;
+        let {todos,deleteTodo,editTodo,completeTodo} = this.props;
         
         let todoItems = todos.map((todo, index) => {
-            return (<TodoItem key={index} todo={todo}/>);
+            return (
+                <TodoItem key={index}
+                    todo={todo}
+                    deleteTodo={deleteTodo}
+                    completeTodo={completeTodo}
+                    editTodo={editTodo} />
+            );
         });
 
         return (

@@ -7,7 +7,10 @@ class Header extends Component {
         let {addTodo} = this.props;
         return (
             <header className="header">
-                <TodoTextInput addTodo={addTodo}/>
+                <TodoTextInput
+                    placeHolder="what needs to be done?"    
+                    newTodo
+                    onSave={(text) => { if (text.trim()) { addTodo(text) } } } />
             </header>
         );
     }
