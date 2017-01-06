@@ -1,0 +1,19 @@
+
+
+actions:
+--------
+
+INCREMENT ,DECREMENT
+
+{type:INCREMENT,value:1}
+{type:DECREMENT,value:1}
+
+//-------------------------
+
+function increment(value){
+    return {type:INCREMENT,value}
+}
+function decrement(value){
+    return {type:DECREMENT,value}
+}
+

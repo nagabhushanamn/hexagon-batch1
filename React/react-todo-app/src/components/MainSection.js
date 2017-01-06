@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 
 import TodoItem from './TodoItem';
 
@@ -27,5 +27,12 @@ class MainSection extends Component {
         );
     }
 }
+
+
+MainSection.propTypes = {
+  todos: PropTypes.array.isRequired,
+  //actions: PropTypes.object.isRequired
+}
+
 
 export default MainSection;

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
+import classnames from 'classnames';
 
 class TodoTextInput extends Component {
 
@@ -18,7 +19,7 @@ class TodoTextInput extends Component {
         if (e.which === 13) {
             this.props.onSave(value);
             if (this.props.newTodo) {
-               this.setState({ text: '' })
+                this.setState({ text: '' })
             }
         }
     }
@@ -32,8 +33,16 @@ class TodoTextInput extends Component {
     render() {
         let {text} = this.props;
         return (
-            <input className="new-todo"
-                placeholder={this.props.placeHolder}    
+            <input
+                className={
+                    classnames({
+                        edit: this.props.editing,
+                        'new-todo': this.props.newTodo
+                    })
+                }
+                type="text"
+                autoFocus="true"
+                placeholder={this.props.placeHolder}
                 value={this.state.text}
                 onChange={this.handleChange.bind(this)}
                 onKeyUp={(e) => { this.handleSubmit(e) } }
@@ -41,6 +50,17 @@ class TodoTextInput extends Component {
                 />
         );
     }
+}
+
+
+
+
+TodoTextInput.propTypes = {
+    onSave: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    placeholder: PropTypes.string,
+    editing: PropTypes.bool,
+    newTodo: PropTypes.bool
 }
 
 export default TodoTextInput;

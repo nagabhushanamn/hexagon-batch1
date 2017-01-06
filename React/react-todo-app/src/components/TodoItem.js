@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import TodoTextInput from './TodoTextInput';
 import classnames from 'classnames'
 
@@ -10,7 +10,6 @@ class TodoItem extends Component {
     }
 
     handleSave(id, text) {
-        console.log(text);
         if (text.length === 0) {
             this.props.deleteTodo(id)
         } else {
@@ -28,6 +27,7 @@ class TodoItem extends Component {
         if (this.state.editing) {
             element = (
                 <TodoTextInput text={todo.title}
+                    editing={this.state.editing}
                     onSave={(text) => { this.handleSave(todo.id, text) } } />
             );
         } else {
@@ -44,12 +44,21 @@ class TodoItem extends Component {
 
         return (
             <li className={classnames({
-                completed: todo.completed
+                completed: todo.completed,
+                editing: this.state.editing
             })}>
                 {element}
             </li>
         );
     }
+}
+
+
+TodoItem.propTypes = {
+    todo: PropTypes.object.isRequired,
+    editTodo: PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired,
+    completeTodo: PropTypes.func.isRequired
 }
 
 export default TodoItem;
