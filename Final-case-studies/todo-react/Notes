@@ -1,0 +1,40 @@
+
+
+Thinking in React  - Todo-App
+----------------------------------
+
+ref : https://facebook.github.io/react/docs/thinking-in-react.html
+
+
+step-1: Break The UI Into A Component Hierarchy
+
+App
+    - Header
+        - TodoTextInput
+    - MainSection
+        - TodoItem(s)
+    - Footer
+
+
+step-2 : Build A Static Version in React    
+
+Step 3: Identify The Minimal (but complete) Representation Of UI State
+
+        a. todos            on App
+        b. filter           on App
+        c. todo-text/title  on TodoTextInput
+        d. editing          on TodoItem   
+
+    e.g state ==> list of todos 
+
+Step 4: Identify Where Your State Should Live 
+
+     e.g for todo-app       
+
+       App ==> stateful
+
+step-5 : Add inverse data-flow
+
+
+
+

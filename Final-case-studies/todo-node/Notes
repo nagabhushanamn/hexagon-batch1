@@ -1,0 +1,49 @@
+
+actions
+-----------
+
+ADD_TODO
+EDIT_TODO
+DELETE_TODO
+COMPLETE_TODO
+COMPLETE_ALL
+VIEW_ALL
+
+
+//--------------------------------------
+
+
+
+REST API:
+
+resource : todo
+
+
+/todos
+/todos/{id}
+
+
+GET /todos ==> return all todos
+GET /todos/{id} ==> return todo
+POST /todos     ==> create new todo
+DELETE /todos/{id} ==> 
+PUT    /todos/{id}
+
+
+representation : json
+
+
+
+
+//---------------------------------------
+
+
+
+JS - Unit Testing
+-------------------
+
+
+frameworks
+
+
+  --> mocha

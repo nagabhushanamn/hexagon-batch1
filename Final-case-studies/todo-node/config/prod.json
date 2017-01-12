@@ -1,0 +1,4 @@
+
+{
+    "DB_URI":"mongodb://hex:hex@ds151108.mlab.com:51108/hex-todos"
+}
